@@ -1,0 +1,13 @@
+#!/bin/bash
+
+RESOURCE=$(flux get helmreleases -A --no-header | grep "failed" | awk '{print $1, $2}') 
+
+if [[ -z "$RESOURCE" ]];
+then
+  echo "Not found any resource with upgrade retries" 
+else
+  while IFS= read -r line; do
+      echo "... $line ..."
+      flux reconcile helmrelease -n $line --force
+  done <<< "$RESOURCE"
+fi
