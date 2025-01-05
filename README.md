@@ -5,7 +5,7 @@ My MacOS configuration files.
 On macOS, run following command:
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ZhongXiLu/dotfiles/master/init.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/pooryasheikh/dotfiles/master/init.sh)"
 ```
 
 references:
