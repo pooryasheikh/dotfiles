@@ -13,7 +13,6 @@ if [ -f "$HOME/.config/brewfile/Brewfile" ]; then
 fi
 
 if [ -f $(brew --prefix)/etc/brew-wrap ];then
-    source $(brew --prefix)/etc/brew-wrap
-    brew file install
+    brew-file install
     echo "All packages installed by Brewfile ✅"
 fi

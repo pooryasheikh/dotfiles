@@ -37,6 +37,7 @@ brew double-conversion
 brew duktape
 brew eza
 brew ffmpeg
+brew file-formula
 brew flac
 brew flux
 brew fontconfig
@@ -116,6 +117,7 @@ brew libidn
 brew libidn2
 brew libksba
 brew liblqr
+brew libmagic
 brew libmicrohttpd
 brew libmng
 brew libnghttp2
