@@ -113,7 +113,10 @@ if [[ -z "$XDG_CONFIG_HOME" ]]
 then
     export XDG_CONFIG_HOME="$HOME/.config"
 fi
-
+if [ -f "$HOME/.config/sops/age/keys.txt" ]
+then
+    export SOPS_AGE_RECIPIENTS=$(sed -n -E 's/^# public key: (.*)/\1/p' "$HOME/.config/sops/age/keys.txt" )
+fi
 
 #=========
 # Kubectl
@@ -123,7 +126,7 @@ source <(kubectl completion zsh)
 #=============
 # Yandex Cloud
 #=============
-source  /opt/homebrew/Caskroom/yandex-cloud-cli/0.128.0/yandex-cloud-cli/completion.zsh.inc
+source  /opt/homebrew/Caskroom/yandex-cloud-cli/*/yandex-cloud-cli/completion.zsh.inc
 
 #=====
 # K9s
