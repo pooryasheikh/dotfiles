@@ -33,10 +33,13 @@ brew cryptography
 brew dav1d
 brew dbus
 brew dive
+brew docker
+brew docker-completion
 brew docutils
 brew double-conversion
 brew duktape
 brew eza
+brew fd
 brew ffmpeg
 brew file-formula
 brew flac
@@ -67,14 +70,15 @@ brew gradle
 brew graphite2
 brew guile
 brew harfbuzz
-brew helm
 brew highlight
 brew highway
 brew hstr
 brew htop
 brew httpie
 brew hunspell
+brew hyperfine
 brew icu4c@76
+brew icu4c@77
 brew imagemagick
 brew imath
 brew ipinfo-cli
@@ -95,7 +99,6 @@ brew kustomize
 brew lame
 brew lazygit
 brew leptonica
-brew lf
 brew libarchive
 brew libass
 brew libassuan
@@ -147,7 +150,6 @@ brew libvidstab
 brew libvmaf
 brew libvorbis
 brew libvpx
-brew libvterm
 brew libx11
 brew libxau
 brew libxcb
@@ -176,18 +178,15 @@ brew mongosh
 brew mpdecimal
 brew mpfr
 brew mpg123
-brew msgpack
 brew mtr
 brew mydumper
-brew mysql-client@8.4
+brew mysql-client
 brew ncurses
 brew neofetch
 brew neovim
 brew nettle
 brew nghttp2
 brew node
-brew node@14
-brew node@16
 brew nowplaying-cli
 brew npth
 brew nspr
@@ -198,7 +197,6 @@ brew openconnect
 brew opencore-amr
 brew openexr
 brew openjdk
-brew openjdk@17
 brew openjpeg
 brew openssl@1.1
 brew openssl@3
@@ -210,6 +208,7 @@ brew pango
 brew pcre
 brew pcre2
 brew percona-xtrabackup
+brew perl-dbd-mysql
 brew pinentry
 brew pixman
 brew pkgconf
@@ -231,6 +230,7 @@ brew python@3.13
 brew python@3.9
 brew qt
 brew rav1e
+brew rclone
 brew readline
 brew ripgrep
 brew rubberband
@@ -240,6 +240,7 @@ brew screenresolution
 brew sdl2
 brew sdl2_image
 brew sentry-cli
+brew sevenzip
 brew shared-mime-info
 brew skopeo
 brew slides
@@ -251,6 +252,7 @@ brew srt
 brew sshpass
 brew stoken
 brew svt-av1
+brew swaks
 brew switchaudio-osx
 brew tcl-tk
 brew tcl-tk@8
@@ -259,10 +261,12 @@ brew terragrunt
 brew tesseract
 brew theora
 brew tldr
+brew tmux
 brew tree
 brew tree-sitter
 brew unbound
 brew unibilium
+brew utf8proc
 brew vault
 brew watch
 brew webp
@@ -277,11 +281,13 @@ brew xvid
 brew xz
 brew yadm
 brew yarn
+brew yazi
 brew yq
 brew z
 brew zeromq
 brew zimg
 brew zlib
+brew zoxide
 brew zsh
 brew zsh-autosuggestions
 brew zsh-completions
@@ -289,6 +295,7 @@ brew zsh-syntax-highlighting
 brew zstd
 
 tap homebrew/cask
+cask alacritty
 cask beardedspice
 cask brave-browser
 cask discord
@@ -298,10 +305,13 @@ cask font-hack-nerd-font
 cask font-jetbrains-mono-nerd-font
 cask font-sf-mono
 cask font-sf-pro
+cask font-symbols-only-nerd-font
+cask ghostty
 cask iterm2
 cask karabiner-elements
 cask keepassxc
 cask maccy
+cask mattermost
 cask postman
 cask pritunl
 cask sf-symbols
@@ -341,6 +351,9 @@ tap jesseduffield/lazygit
 tap minio/stable
 brew mc
 
+tap mongodb/brew
+brew mongodb-database-tools
+
 tap nikitabobko/tap
 cask aerospace
 
@@ -352,8 +365,10 @@ brew krr
 
 tap ynqa/tap
 
+# Other Homebrew packages
+brew node@14
+
 # App Store applications
-appstore 1533873488 Fair VPN (1.3.0)
 appstore 682658836 GarageBand (10.4.3)
 appstore 409183694 Keynote (11.1)
 appstore 409203825 Numbers (11.1)

@@ -49,6 +49,25 @@ for i, s in ipairs(spaces) do
     popup = { background = { border_width = 5, border_color = colors.black } },
   })
 
+  -- Add icon line population
+  local icon_line = ""
+  local no_app = true
+  sbar.exec("aerospace list-windows --format %{app-name} --workspace " .. i, function(apps)
+    for app in apps:gmatch("[^\r\n]+") do
+      no_app = false
+      local lookup = app_icons[app]
+      local icon = ((lookup == nil) and app_icons["Default"] or lookup)
+      icon_line = icon_line .. icon
+    end
+
+    if no_app then
+      icon_line = " —"
+    end
+    sbar.animate("tanh", 10, function()
+      spaces[i]:set({ label = icon_line })
+    end)
+  end)
+
   spaces[i] = space
 
   -- Single item bracket for space items to achieve double border on highlight
@@ -133,26 +152,25 @@ local spaces_indicator = sbar.add("item", {
   },
 })
 
-space_window_observer:subscribe("space_windows_change", function(env)
-  for i, space in ipairs(spaces) do
-    local icon_line = ""
-    local no_app = true
-    sbar.exec("aerospace list-windows --format %{app-name} --workspace " .. i, function(apps)
-      for app in apps:gmatch("[^\r\n]+") do
-        no_app = false
-        local lookup = app_icons[app]
-        local icon = ((lookup == nil) and app_icons["Default"] or lookup)
-        icon_line = icon_line .. icon
-      end
+space_window_observer:subscribe("aerospace_focus_change", function(env)
+  local icon_line = ""
+  local no_app = true
+  local selected = env.FOCUSED_WORKSPACE
+  sbar.exec("sleep 0.1 && aerospace list-windows --format %{app-name} --workspace " .. selected, function(apps)
+    for app in apps:gmatch("[^\r\n]+") do
+      no_app = false
+      local lookup = app_icons[app]
+      local icon = ((lookup == nil) and app_icons["Default"] or lookup)
+      icon_line = icon_line .. icon
+    end
 
-      if no_app then
-        icon_line = " —"
-      end
-      sbar.animate("tanh", 10, function()
-        spaces[i]:set({ label = icon_line })
-      end)
+    if no_app then
+      icon_line = " —"
+    end
+    sbar.animate("tanh", 10, function()
+      spaces[tonumber(selected)]:set({ label = icon_line })
     end)
-  end
+  end)
 end)
 
 spaces_indicator:subscribe("swap_menus_and_spaces", function(env)

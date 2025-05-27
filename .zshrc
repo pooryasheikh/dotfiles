@@ -8,10 +8,6 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
-SYSTEM_TYPE=$(uname -s)
-[[ "$SYSTEM_TYPE" = "Darwin" ]] && LOCAL_DIR="/usr/local"
-[[ "$SYSTEM_TYPE" = "Linux" ]] && LOCAL_DIR="/home/linuxbrew/.linuxbrew"
-
 #=====
 # ZSH
 #=====
@@ -31,6 +27,7 @@ plugins=(
     # zsh-vi-mode
     kubectl
     Kube-ps1
+    zsh-lazyload
 )
 
 [[ -e $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
@@ -69,16 +66,6 @@ fi
 #=========================
 [[ -e "/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-#========
-# iTerm2
-#========
-[[ -e "$HOME/.config/iterm2/.iterm2_shell_integration.zsh" ]] && source "$HOME/.config/iterm2/.iterm2_shell_integration.zsh"
-
-#==================
-# Homebrew (Linux)
-#==================
-[[ -d "/home/linuxbrew" ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 #==================
 # Homebrew wrap 
 #==================
@@ -105,7 +92,7 @@ export GOPATH=$HOME/go
 export GOROOT="$(brew --prefix go)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 export GPG_TTY=$(tty)
-export PATH="/opt/homebrew/opt/mysql-client@8.4/bin:$PATH"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="$HOME/Library/Python/3.10/bin:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
@@ -121,12 +108,12 @@ fi
 #=========
 # Kubectl
 #=========
-source <(kubectl completion zsh)
+lazyload kubectl -- 'source <(kubectl completion zsh)'
 
 #=============
 # Yandex Cloud
 #=============
-source  /opt/homebrew/Caskroom/yandex-cloud-cli/*/yandex-cloud-cli/completion.zsh.inc
+lazyload yc -- 'source  /opt/homebrew/Caskroom/yandex-cloud-cli/*/yandex-cloud-cli/completion.zsh.inc'
 
 #=====
 # K9s
@@ -134,12 +121,6 @@ source  /opt/homebrew/Caskroom/yandex-cloud-cli/*/yandex-cloud-cli/completion.zs
 export K9S_CONFIG_DIR=~/.config/k9s/
 
 #=======
-# Vault
+# Helm
 #=======
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/bin/vault vault
-
-#=======
-# Flux
-#=======
-source <(helm completion zsh)
+lazyload helm -- 'source <(helm completion zsh)'

@@ -18,6 +18,10 @@ exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
 
+on-focus-changed = [
+    'exec-and-forget sketchybar --trigger aerospace_focus_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)'
+]
+
 # Start AeroSpace at login
 start-at-login = true
 
@@ -67,7 +71,7 @@ inner.horizontal = 10
 inner.vertical =   10
 outer.left =       10
 outer.bottom =     10
-outer.top =        50
+outer.top =        [{ monitor.built-in = 20 }, 50]
 outer.right =      10
 
 # 'main' binding mode declaration
@@ -168,7 +172,7 @@ if.app-id = 'com.brave.Browser'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-id = 'com.googlecode.iterm2'
+if.app-id = 'com.mitchellh.ghostty'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
@@ -177,11 +181,11 @@ run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
-run = ['layout floating', 'move-node-to-workspace 4']
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'org.keepassxc.keepassxc'
-run = ['layout floating', 'move-node-to-workspace 4']
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'

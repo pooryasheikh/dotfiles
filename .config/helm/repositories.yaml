@@ -32,15 +32,6 @@ repositories:
   certFile: ""
   insecure_skip_tls_verify: false
   keyFile: ""
-  name: banzaicloud-stable
-  pass_credentials_all: false
-  password: ""
-  url: https://kubernetes-charts.banzaicloud.com
-  username: ""
-- caFile: ""
-  certFile: ""
-  insecure_skip_tls_verify: false
-  keyFile: ""
   name: bitnami
   pass_credentials_all: false
   password: ""
@@ -86,19 +77,10 @@ repositories:
   certFile: ""
   insecure_skip_tls_verify: false
   keyFile: ""
-  name: banzaicloud
-  pass_credentials_all: false
-  password: ""
-  url: https://kubernetes-charts.banzaicloud.com
-  username: ""
-- caFile: ""
-  certFile: ""
-  insecure_skip_tls_verify: false
-  keyFile: ""
   name: jetstack
   pass_credentials_all: false
   password: ""
-  url: https://charts.jetstack.io/
+  url: https://charts.jetstack.io
   username: ""
 - caFile: ""
   certFile: ""
@@ -198,4 +180,49 @@ repositories:
   pass_credentials_all: false
   password: ""
   url: https://charts.fairwinds.com/stable
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: airbyte
+  pass_credentials_all: false
+  password: ""
+  url: https://airbytehq.github.io/helm-charts
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: passbolt
+  pass_credentials_all: false
+  password: ""
+  url: https://download.passbolt.com/charts/passbolt
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: mattermost
+  pass_credentials_all: false
+  password: ""
+  url: https://helm.mattermost.com
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: jitsi
+  pass_credentials_all: false
+  password: ""
+  url: https://jitsi-contrib.github.io/jitsi-helm/
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: yandex-s3
+  pass_credentials_all: false
+  password: ""
+  url: https://yandex-cloud.github.io/k8s-csi-s3/charts
   username: ""
