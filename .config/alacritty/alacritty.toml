@@ -1,0 +1,70 @@
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding = { x = 5, y = 5 }
+dynamic_padding = true
+decorations = "buttonless"
+opacity = 0.95
+blur = true
+option_as_alt = "Both"
+
+[font]
+normal = { family = "Hack Nerd Font Mono", style = "Regular" }
+size = 15.0
+
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+unfocused_hollow = true
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[general]
+import = ["~/.config/alacritty/themes/tokyonight_night.toml"]
+
+[[keyboard.bindings]]
+key = "Key1"
+mods = "Command"
+chars = "\u0001\u0031"
+
+[[keyboard.bindings]]
+key = "Key2"
+mods = "Command"
+chars = "\u0001\u0032"
+
+[[keyboard.bindings]]
+key = "Key3"
+mods = "Command"
+chars = "\u0001\u0033"
+
+[[keyboard.bindings]]
+key = "Key4"
+mods = "Command"
+chars = "\u0001\u0034"
+
+[[keyboard.bindings]]
+key = "Key5"
+mods = "Command"
+chars = "\u0001\u0035"
+
+[[keyboard.bindings]]
+key = "Key6"
+mods = "Command"
+chars = "\u0001\u0036"
+
+[[keyboard.bindings]]
+key = "Key7"
+mods = "Command"
+chars = "\u0001\u0037"
+
+[[keyboard.bindings]]
+key = "Key8"
+mods = "Command"
+chars = "\u0001\u0038"
+
+[[keyboard.bindings]]
+key = "Key9"
+mods = "Command"
+chars = "\u0001\u0039"

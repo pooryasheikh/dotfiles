@@ -149,15 +149,6 @@ repositories:
   certFile: ""
   insecure_skip_tls_verify: false
   keyFile: ""
-  name: qryn-helm
-  pass_credentials_all: false
-  password: ""
-  url: https://metrico.github.io/qryn-helm/
-  username: ""
-- caFile: ""
-  certFile: ""
-  insecure_skip_tls_verify: false
-  keyFile: ""
   name: odigos
   pass_credentials_all: false
   password: ""
@@ -225,4 +216,40 @@ repositories:
   pass_credentials_all: false
   password: ""
   url: https://yandex-cloud.github.io/k8s-csi-s3/charts
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: datahub
+  pass_credentials_all: false
+  password: ""
+  url: https://helm.datahubproject.io/
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: elastic
+  pass_credentials_all: false
+  password: ""
+  url: https://helm.elastic.co
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: cert-manager-lego-webhook
+  pass_credentials_all: false
+  password: ""
+  url: https://yxwuxuanl.github.io/cert-manager-lego-webhook/
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: emberstack
+  pass_credentials_all: false
+  password: ""
+  url: https://emberstack.github.io/helm-charts
   username: ""

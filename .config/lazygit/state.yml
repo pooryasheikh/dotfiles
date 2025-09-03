@@ -1,0 +1,47 @@
+lastupdatecheck: 0
+recentrepos:
+    - /Users/oxff/Works/evrone/revo/repo/ru/infra/revo-charts
+    - /Users/oxff/Works/evrone/revo/repo/ru/infra/iac
+    - /Users/oxff/Works/evrone/revo/repo/ru/infra/ruby-gitlab-ci
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/revo-backend
+    - /Users/oxff/Works/evrone/revo/repo/ru/infra/ruby-gitlab-ci-test
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/revo-zakvaska
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/revo-smetanka
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/revo-omul
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/revo-mc
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/referral-program
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/cee/referral-program
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/revo-gate
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/mokka-usher
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/mokka-demo-store
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/kokao-backend
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/am-kafka-stream
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/revo-black-list
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/silent_bob
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/revo-suluguni
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/payment-orders-parser
+    - /Users/oxff/Works/evrone/revo/repo/ru/infra/helm-charts
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/team-metrics
+    - /Users/oxff/Works/evrone/revo/repo/ru/infra/revo-toolkit
+    - /Users/oxff/Works/evrone/revo/repo/ru/infra/gitlab-test
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/frontend-apps
+    - /Users/oxff/Works/evrone/revo/repo/ru/mokka.tech/revo-backend-wb-adapter
+    - /Users/oxff/Works/evrone/revo/repo/ru/infra/tf-modules/yc-container-registry
+    - /Users/oxff/Works/gamingcy/repo/gamingcy
+    - /Users/oxff/Works/personal/repo/pooryasheikh
+    - /Users/oxff/Works/personal/repo/gitlab/gitops
+    - /Users/oxff/Works/personal/repo/gitlab/vote
+    - /Users/oxff/Works/personal/repo/gitlab/semantic-release
+    - /Users/oxff/Works/personal/repo/gitops
+    - /Users/oxff/Works/arbuz/repo/gitops
+    - /Users/oxff/Works/arbuz/repo/helm
+    - /Users/oxff/Works/others/repo/gpt-cli
+startuppopupversion: 5
+didshowhunkstaginghint: false
+lastversion: 0.54.2
+customcommandshistory:
+    - 'fix: hotfix reposiroty name for mokka-demo-store'
+    - 'fix: hotfix ci pipeline'
+    - master
+    - 'fix: patch url for shcema-registry in akhq'
+hidecommandlog: false

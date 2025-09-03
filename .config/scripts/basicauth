@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Usage: basicauth my-htpasswd auth-secret my-namespace
+
+HTPASSWD_FILE="$1"
+SECRET_NAME="$2"
+NAMESPACE="${3:-default}"
+
+if [[ ! -f "$HTPASSWD_FILE" ]]; then
+  echo "❌ htpasswd file not found: $HTPASSWD_FILE"
+  exit 1
+fi
+
+echo "apiVersion: v1"
+echo "kind: Secret"
+echo "metadata:"
+echo "  name: $SECRET_NAME"
+echo "  namespace: $NAMESPACE"
+echo "type: Opaque"
+echo "data:"
+
+while IFS=: read -r USER HASH; do
+  ENCODED_HASH=$(echo -n "$HASH" | base64)
+  echo "  $USER: $ENCODED_HASH"
+done < "$HTPASSWD_FILE"

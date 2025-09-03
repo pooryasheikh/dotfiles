@@ -14,8 +14,11 @@ alias vim="nvim"
 alias tarc="tar -zcvf"
 alias tarx="tar -xvzf"
 alias path='echo -e ${PATH//:/\\n}'
+alias python='python3'
+alias pip='pip3'
+alias ctx='kubectl ctx'
 
-alias aliases="subl $HOME/.config/aliases/.aliases"
+alias aliases="nvim $HOME/.config/aliases/.aliases"
 
 alias update='brew update; brew upgrade; brew cleanup'
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"

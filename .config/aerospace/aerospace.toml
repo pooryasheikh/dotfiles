@@ -172,8 +172,12 @@ if.app-id = 'com.brave.Browser'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
+if.app-id = 'org.alacritty'
 run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'Mattermost.Desktop'
+run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-id = 'com.todesktop.240607opwvcw853'
