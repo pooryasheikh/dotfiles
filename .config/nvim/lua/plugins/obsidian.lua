@@ -6,7 +6,6 @@ return {
   event = { "BufReadPre  */obsidian-vault/*.md" },
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "hrsh7th/nvim-cmp",
     "nvim-telescope/telescope.nvim",
     {
       "AstroNvim/astrocore",

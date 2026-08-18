@@ -1,0 +1,35 @@
+customCommands:
+  # ── [TASK-123]: … ──────────────────────────────────────────────────────────
+  # For repos whose convention is the bracketed ticket prefix: argocd, helm-charts,
+  # terraform. No semantic-release there, so the message shape carries no release
+  # meaning and the type does not matter.
+  - key: "C"
+    context: "files"
+    description: "Generate commit message with task number from branch [TASK-123]: ..."
+    command: "TASK=$(git branch --show-current | grep -oE '^[A-Z]+-[0-9]+'); git diff --staged | /opt/homebrew/bin/claude -p --no-session-persistence \"Generate a concise git commit message for these staged changes. The message MUST follow this exact format: [$TASK]: <short description>. Output ONLY the raw commit message with no markdown, no code blocks, no backticks, no explanations.\" --model claude-sonnet-4-6 --output-format text > /tmp/commit_msg && GIT_EDITOR=vim git commit -e -F /tmp/commit_msg"
+    output: terminal
+
+  # ── feat(SCOPE): … / fix(SCOPE): … ─────────────────────────────────────────
+  # For repos with semantic-release, where THE TYPE PICKS THE VERSION:
+  #   feat -> minor | fix, perf -> patch | BREAKING CHANGE -> major
+  #   docs, test, chore, refactor, ci, build -> no release, and so no image
+  #
+  # NOTE: lazygit renders `command` through Go text/template before running it, so a
+  # literal {{...}} here is parsed as a template action and fails with
+  # 'function "X" not defined'. That is why the prompt placeholder is @SCOPE@ and not
+  # a brace form — do not reintroduce braces into this command string.
+  #
+  # The selection rules live in semver-commit-prompt.md rather than inline, because
+  # they are long and worth editing. They exist because the old one-line prompt
+  # ("use conventional commits, e.g. feat:, fix:, chore:") produced `feat` almost
+  # every time: `feat` led the example list, no criteria for choosing were given,
+  # and a diff that adds lines reads as a new feature even when it repairs
+  # something broken.
+  #
+  # Reminder: pressing `C` instead of `S` in a semantic-release repo yields NO tag
+  # and therefore NO image build.
+  - key: "S"
+    context: "files"
+    description: "Generate semver/conventional commit message (feat: ..., fix: ...)"
+    command: "BRANCH=$(git branch --show-current); git diff --staged | /opt/homebrew/bin/claude -p --no-session-persistence \"$(sed \"s|@SCOPE@|$BRANCH|\" ~/.config/lazygit/semver-commit-prompt.md)\" --model claude-sonnet-4-6 --output-format text > /tmp/commit_msg && GIT_EDITOR=vim git commit -e -F /tmp/commit_msg"
+    output: terminal
