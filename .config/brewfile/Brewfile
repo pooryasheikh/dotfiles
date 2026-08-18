@@ -1,19 +1,24 @@
-# Homebrew manifest -- hand-curated, installed with native `brew bundle`.
+# Homebrew manifest for this machine, managed by brew-file (rcmdnk/file).
 #
-#   brew bundle install --file=~/.config/brewfile/Brewfile
-#   brew bundle check   --file=~/.config/brewfile/Brewfile --verbose
+#   brew-file install                       # install everything listed here
+#   brew file update                        # re-record what is installed
 #
-# Only top-level packages belong here. Dependencies resolve themselves.
 #
-# DO NOT install brew-file / brew-wrap. It rewrites this file on every `brew`
-# invocation with the full dependency closure (337 entries, the entire Qt suite
-# and openjdk included), which is both unreviewable and silently overwrites
-# whatever is committed here.
+# brew-file (rcmdnk/file) manages this file: brew-wrap appends newly installed
+# packages automatically on `brew install`. That means this file is REGENERATED,
+# so the section comments below will not survive indefinitely.
 #
-# DO NOT regenerate with `brew bundle dump` either: Homebrew 6 refuses to load
-# formulae from untrusted taps, so dump/leaves SILENTLY OMIT every entry in the
-# third-party taps section below -- sketchybar and borders included. brew.sh
-# runs `brew trust` to make them loadable. Edit this file by hand.
+# Two things to know:
+#
+#  1. brew-wrap runs `brew file update`, which by default records the full
+#     dependency closure -- that is how this file previously reached 337 entries
+#     including the whole Qt suite and openjdk. To keep it to top-level packages
+#     only, without changing the workflow:  brew file set_leaves 1
+#
+#  2. Homebrew 6 refuses to load formulae from untrusted taps, and both
+#     `brew leaves` and `brew bundle dump` OMIT them silently -- sketchybar and
+#     borders included. brew.sh runs `brew trust` for the taps below first, so
+#     keep that step or those entries will quietly disappear on regeneration.
 
 # ===========================================================================
 # Taps

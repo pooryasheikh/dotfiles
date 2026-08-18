@@ -74,6 +74,15 @@ function zvm_after_lazy_keybindings() {
 [[ -e "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
   source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
+#==================
+# Homebrew wrap
+#==================
+# brew-file's hook: appends newly installed packages to
+# ~/.config/brewfile/Brewfile automatically on `brew install`.
+if [ -f "$BREW_PREFIX/etc/brew-wrap" ]; then
+  source "$BREW_PREFIX/etc/brew-wrap"
+fi
+
 #=========
 # Aliases
 #=========

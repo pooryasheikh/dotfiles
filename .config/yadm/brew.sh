@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 # Installs Homebrew (if missing) and everything in the Brewfile.
-# Uses native `brew bundle` -- no brew-file/brew-wrap wrapper, so the Brewfile
-# stays a hand-curated list of top-level packages instead of a dependency dump.
+# Uses brew-file (rcmdnk/file), which hooks `brew install` via brew-wrap so newly
+# installed packages are appended to the Brewfile automatically.
 
 set -euo pipefail
 
@@ -50,5 +50,10 @@ for t in "${TRUSTED_TAPS[@]}"; do
 done
 echo "Third-party taps trusted ✅"
 
-brew bundle install --file="$BREWFILE"
+# brew-file provides the brew-wrap hook that auto-records installs.
+if ! brew list --formula 2>/dev/null | grep -qx brew-file; then
+    brew install rcmdnk/file/brew-file
+fi
+
+brew-file install
 echo "Brewfile packages ✅"
