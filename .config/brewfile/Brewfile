@@ -31,6 +31,7 @@ tap "fluxcd/tap"                 # flux
 tap "getsentry/tools"            # sentry-cli
 tap "hashicorp/tap"              # packer, vault
 tap "ksdme/tap"                  # ut
+tap "kvndrsslr/sketchybar-app-font"  # font-sketchybar-app-font
 tap "minio/stable"               # mc
 tap "mongodb/brew"               # mongodb-database-tools
 tap "nikitabobko/tap"            # aerospace
@@ -240,6 +241,7 @@ cask "font-jetbrains-mono-nerd-font"
 cask "font-symbols-only-nerd-font"
 cask "font-sf-mono"
 cask "font-sf-pro"
+cask "kvndrsslr/sketchybar-app-font/font-sketchybar-app-font"  # app icons in items/spaces.lua
 
 # ===========================================================================
 # Mac App Store

@@ -37,6 +37,7 @@ TRUSTED_TAPS=(
     getsentry/tools
     hashicorp/tap
     ksdme/tap
+    kvndrsslr/sketchybar-app-font
     minio/stable
     mongodb/brew
     nikitabobko/tap
