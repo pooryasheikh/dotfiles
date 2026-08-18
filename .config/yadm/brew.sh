@@ -36,7 +36,6 @@ TRUSTED_TAPS=(
     fluxcd/tap
     getsentry/tools
     hashicorp/tap
-    hudochenkov/sshpass
     ksdme/tap
     minio/stable
     mongodb/brew
@@ -53,6 +52,14 @@ echo "Third-party taps trusted ✅"
 # brew-file provides the brew-wrap hook that auto-records installs.
 if ! brew list --formula 2>/dev/null | grep -qx brew-file; then
     brew install rcmdnk/file/brew-file
+fi
+
+CLASS="$(yadm config --get local.class 2>/dev/null || echo unknown)"
+if [[ "$CLASS" == "work" ]]; then
+    # No personal Apple ID sign-in on work hardware: skip mas entirely
+    # instead of failing bootstrap on the first Mac App Store app.
+    export HOMEBREW_BREWFILE_APPSTORE=0
+    echo "class=work: skipping Mac App Store apps (mas)"
 fi
 
 brew-file install

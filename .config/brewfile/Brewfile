@@ -30,7 +30,6 @@ tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
 tap "fluxcd/tap"                 # flux
 tap "getsentry/tools"            # sentry-cli
 tap "hashicorp/tap"              # packer, vault
-tap "hudochenkov/sshpass"        # sshpass (ansible)
 tap "ksdme/tap"                  # ut
 tap "minio/stable"               # mc
 tap "mongodb/brew"               # mongodb-database-tools
@@ -130,7 +129,7 @@ brew "infracost"
 brew "hashicorp/tap/packer"
 brew "hashicorp/tap/vault"
 brew "ansible"
-brew "hudochenkov/sshpass/sshpass"       # ansible ssh password auth
+brew "sshpass"                           # ansible ssh password auth
 brew "cloudflare/cloudflare/cf-terraforming"
 
 # ===========================================================================
@@ -196,7 +195,6 @@ brew "ffmpeg"
 brew "imagemagick"
 brew "hugo"
 brew "presenterm"                # terminal slides
-brew "neofetch"
 
 # ===========================================================================
 # System monitoring
