@@ -1,0 +1,99 @@
+# ============================================================================
+# yadm deny-by-default ignore list
+#
+# The worktree of this repository is $HOME, and the remote is PUBLIC.
+# Anything not explicitly allowlisted below is ignored, so a stray
+# `yadm add -A` can never publish credentials, keys, history or caches.
+#
+# To start tracking something new:
+#     yadm add -f <path>          # -f overrides this file
+#     # then add a matching `!` rule below so it stays visible in status
+#
+# Machine-specific values (identity, hosts, contexts, PATH) do NOT go in
+# here -- they live in the *.local / conf.d files listed at the bottom,
+# which are ignored on purpose so the work and personal laptops stay apart.
+# ============================================================================
+
+# --- deny everything at the top level ---------------------------------------
+/*
+!/.gitignore
+
+# --- repo docs --------------------------------------------------------------
+!/README.md
+!/LICENSE
+
+# --- shell ------------------------------------------------------------------
+!/.zshrc
+!/.zprofile
+!/.p10k.zsh
+!/.hushlogin
+
+# --- ~/.config: deny all, then allow per tool -------------------------------
+!/.config/
+/.config/*
+
+!/.config/aerospace/
+!/.config/alacritty/
+!/.config/aliases/
+!/.config/bpytop/
+!/.config/brewfile/
+!/.config/finicky/
+!/.config/git/
+!/.config/htop/
+!/.config/lazygit/
+!/.config/lf/
+!/.config/neofetch/
+!/.config/nvim/
+!/.config/presenterm/
+!/.config/scripts/
+!/.config/sketchybar/
+!/.config/tmux/
+!/.config/yadm/
+!/.config/zsh/
+
+# --- selective: only the portable parts of these tools ----------------------
+# k9s: keybindings/plugins/skins are portable; config.yaml and clusters/
+# hold this machine's contexts and must stay local.
+!/.config/k9s/
+/.config/k9s/*
+!/.config/k9s/aliases.yaml
+!/.config/k9s/hotKeys.yaml
+!/.config/k9s/plugins.yaml
+!/.config/k9s/skins/
+
+# glab: aliases are portable; config.yml holds an API token.
+!/.config/glab-cli/
+/.config/glab-cli/*
+!/.config/glab-cli/aliases.yml
+
+# tfenv: pin the version, not the downloaded toolchains.
+!/.config/tfenv/
+/.config/tfenv/*
+!/.config/tfenv/version
+
+# ssh: only the portable skeleton. Keys and host topology stay local.
+!/.ssh/
+/.ssh/*
+!/.ssh/config
+
+# --- carve-outs inside allowed directories ----------------------------------
+# Generated, machine-local or churning state.
+/.config/lazygit/state.yml
+/.config/bpytop/error.log
+/.config/tmux/plugins/
+/.config/alacritty/themes/
+/.config/yadm/config
+/.config/yadm/archive
+/.config/sketchybar/*.o
+/.config/nvim/spell/
+
+# --- machine-local overrides: intentionally never tracked -------------------
+/.config/git/config.local
+/.config/zsh/local.zsh
+/.ssh/conf.d/
+
+# --- editor / OS noise ------------------------------------------------------
+*.bak
+*~
+*.swp
+.DS_Store
