@@ -4,7 +4,7 @@
 # These used to be git submodules, which pinned an exact commit per plugin.
 # tpm has no pin syntax and always clones the default branch tip, so without
 # the PINS list below a new machine gets a different plugin version than an
-# existing one -- tmux-tokyo-night is at v7.x upstream while this config is
+# existing one -- tmux-powerkit moves fast, and this config is
 # written against v1.10.0's option names (@theme_disable_plugins etc.), so an
 # unpinned install silently renders a different status bar.
 set -euo pipefail
@@ -15,7 +15,7 @@ TPM="$PLUGINS/tpm"
 # "<plugin-dir-name> <tag>" per line. Bash 3.2 safe -- no associative arrays,
 # because macOS ships bash 3.2 and this may not run under Homebrew's bash.
 PINS="
-tmux-tokyo-night v1.10.0
+tmux-powerkit v7.1.0
 "
 
 if [[ ! -f "$TPM/tpm" ]]; then
