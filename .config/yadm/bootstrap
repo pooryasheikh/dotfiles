@@ -22,7 +22,10 @@ if [[ ! -d "$BOOTSTRAP_D" ]]; then
     exit 1
 fi
 
-find "$BOOTSTRAP_D" -type f | sort | while IFS= read -r bootstrap; do
+# Read the script list from fd 3, not stdin (fd 0), so each bootstrap
+# script below still has the real terminal on its own stdin and can
+# prompt interactively (e.g. 90-local.sh asking for git name/email).
+while IFS= read -r bootstrap <&3; do
     if [[ -x "$bootstrap" && ! "$bootstrap" =~ "##" && ! "$bootstrap" =~ "~$" ]]; then
         if ! "$bootstrap"; then
             BOOTSTRAP_FILENAME=$(basename -- $bootstrap)
@@ -34,4 +37,4 @@ find "$BOOTSTRAP_D" -type f | sort | while IFS= read -r bootstrap; do
             exit 1
         fi
     fi
-done
+done 3< <(find "$BOOTSTRAP_D" -type f | sort)
