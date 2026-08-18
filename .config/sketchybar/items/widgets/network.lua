@@ -2,17 +2,24 @@ local icons = require("icons")
 local colors = require("colors")
 local settings = require("settings")
 
--- Monitor the active default-route interface for network traffic
-sbar.exec("killall network_load >/dev/null; true")
+local popup_width = 250
+
+-- Tracks the interface currently being monitored so we can detect switches
+local current_iface = ""
+
+local function start_network_load(iface)
+  current_iface = iface
+  sbar.exec("killall network_load 2>/dev/null; $CONFIG_DIR/helpers/event_providers/network_load/bin/network_load " .. iface .. " network_update 2.0")
+end
+
+-- Detect active default-route interface and start monitoring it
 sbar.exec("route get default 2>/dev/null | awk '/interface:/{print $2}'", function(iface)
   iface = iface:gsub("[%s\n]+", "")
   if iface == "" then iface = "en0" end
-  sbar.exec("$CONFIG_DIR/helpers/event_providers/network_load/bin/network_load " .. iface .. " network_update 2.0")
+  start_network_load(iface)
 end)
 
-local popup_width = 250
-
-local wifi_up = sbar.add("item", "widgets.wifi1", {
+local net_up = sbar.add("item", "widgets.net1", {
   position = "right",
   padding_left = -5,
   width = 0,
@@ -36,7 +43,7 @@ local wifi_up = sbar.add("item", "widgets.wifi1", {
   y_offset = 4,
 })
 
-local wifi_down = sbar.add("item", "widgets.wifi2", {
+local net_down = sbar.add("item", "widgets.net2", {
   position = "right",
   padding_left = -5,
   icon = {
@@ -59,23 +66,22 @@ local wifi_down = sbar.add("item", "widgets.wifi2", {
   y_offset = -4,
 })
 
-local wifi = sbar.add("item", "widgets.wifi.padding", {
+local net_icon = sbar.add("item", "widgets.net.padding", {
   position = "right",
   label = { drawing = false },
 })
 
--- Background around the item
-local wifi_bracket = sbar.add("bracket", "widgets.wifi.bracket", {
-  wifi.name,
-  wifi_up.name,
-  wifi_down.name
+local net_bracket = sbar.add("bracket", "widgets.net.bracket", {
+  net_icon.name,
+  net_up.name,
+  net_down.name
 }, {
   background = { color = colors.bg1 },
   popup = { align = "center", height = 30 }
 })
 
 local ssid = sbar.add("item", {
-  position = "popup." .. wifi_bracket.name,
+  position = "popup." .. net_bracket.name,
   icon = {
     font = {
       style = settings.font.style_map["Bold"]
@@ -100,7 +106,7 @@ local ssid = sbar.add("item", {
 })
 
 local hostname = sbar.add("item", {
-  position = "popup." .. wifi_bracket.name,
+  position = "popup." .. net_bracket.name,
   icon = {
     align = "left",
     string = "Hostname:",
@@ -115,7 +121,7 @@ local hostname = sbar.add("item", {
 })
 
 local ip = sbar.add("item", {
-  position = "popup." .. wifi_bracket.name,
+  position = "popup." .. net_bracket.name,
   icon = {
     align = "left",
     string = "IP:",
@@ -129,7 +135,7 @@ local ip = sbar.add("item", {
 })
 
 local mask = sbar.add("item", {
-  position = "popup." .. wifi_bracket.name,
+  position = "popup." .. net_bracket.name,
   icon = {
     align = "left",
     string = "Subnet mask:",
@@ -143,7 +149,7 @@ local mask = sbar.add("item", {
 })
 
 local router = sbar.add("item", {
-  position = "popup." .. wifi_bracket.name,
+  position = "popup." .. net_bracket.name,
   icon = {
     align = "left",
     string = "Router:",
@@ -158,61 +164,66 @@ local router = sbar.add("item", {
 
 sbar.add("item", { position = "right", width = settings.group_paddings })
 
-local network_icon_tick = 0
-
-local function update_network_icon()
+local function update_net_icon()
   sbar.exec("route get default 2>/dev/null | awk '/interface:/{print $2}'", function(iface)
     iface = iface:gsub("[%s\n]+", "")
     if iface == "" then
-      wifi:set({ icon = { string = icons.wifi.disconnected, color = colors.red } })
+      net_icon:set({ icon = { string = icons.wifi.disconnected, color = colors.red } })
       return
     end
     sbar.exec("networksetup -listallhardwareports 2>/dev/null | awk '/Wi-Fi|AirPort/{found=1} found && /Device:/{print $2; exit}'", function(wifi_iface)
       wifi_iface = wifi_iface:gsub("[%s\n]+", "")
       if iface == wifi_iface then
-        wifi:set({ icon = { string = icons.wifi.connected, color = colors.white } })
+        net_icon:set({ icon = { string = icons.wifi.connected, color = colors.white } })
       else
-        wifi:set({ icon = { string = icons.wifi.lan, color = colors.white } })
+        net_icon:set({ icon = { string = icons.wifi.lan, color = colors.white } })
       end
     end)
   end)
 end
 
-wifi_up:subscribe("network_update", function(env)
+-- Check if the monitored interface is still the active default; restart network_load if not
+local function check_iface_switch()
+  sbar.exec("route get default 2>/dev/null | awk '/interface:/{print $2}'", function(iface)
+    iface = iface:gsub("[%s\n]+", "")
+    if iface ~= "" and iface ~= current_iface then
+      start_network_load(iface)
+    end
+    update_net_icon()
+  end)
+end
+
+local iface_tick = 0
+
+net_up:subscribe("network_update", function(env)
   local up_color = (env.upload == "000 Bps") and colors.grey or colors.red
   local down_color = (env.download == "000 Bps") and colors.grey or colors.blue
-  wifi_up:set({
+  net_up:set({
     icon = { color = up_color },
-    label = {
-      string = env.upload,
-      color = up_color
-    }
+    label = { string = env.upload, color = up_color }
   })
-  wifi_down:set({
+  net_down:set({
     icon = { color = down_color },
-    label = {
-      string = env.download,
-      color = down_color
-    }
+    label = { string = env.download, color = down_color }
   })
-  network_icon_tick = (network_icon_tick + 1) % 5
-  if network_icon_tick == 0 then
-    update_network_icon()
+  iface_tick = (iface_tick + 1) % 5
+  if iface_tick == 0 then
+    check_iface_switch()
   end
 end)
 
-wifi:subscribe({"wifi_change", "system_woke"}, function(env)
-  update_network_icon()
+net_icon:subscribe({"wifi_change", "system_woke"}, function(env)
+  check_iface_switch()
 end)
 
 local function hide_details()
-  wifi_bracket:set({ popup = { drawing = false } })
+  net_bracket:set({ popup = { drawing = false } })
 end
 
 local function toggle_details()
-  local should_draw = wifi_bracket:query().popup.drawing == "off"
+  local should_draw = net_bracket:query().popup.drawing == "off"
   if should_draw then
-    wifi_bracket:set({ popup = { drawing = true }})
+    net_bracket:set({ popup = { drawing = true }})
     sbar.exec("networksetup -getcomputername", function(result)
       hostname:set({ label = result })
     end)
@@ -245,10 +256,10 @@ local function toggle_details()
   end
 end
 
-wifi_up:subscribe("mouse.clicked", toggle_details)
-wifi_down:subscribe("mouse.clicked", toggle_details)
-wifi:subscribe("mouse.clicked", toggle_details)
-wifi:subscribe("mouse.exited.global", hide_details)
+net_up:subscribe("mouse.clicked", toggle_details)
+net_down:subscribe("mouse.clicked", toggle_details)
+net_icon:subscribe("mouse.clicked", toggle_details)
+net_icon:subscribe("mouse.exited.global", hide_details)
 
 local function copy_label_to_clipboard(env)
   local label = sbar.query(env.NAME).label.value

@@ -152,24 +152,35 @@ local spaces_indicator = sbar.add("item", {
   },
 })
 
-space_window_observer:subscribe("aerospace_focus_change", function(env)
+local function update_workspace_icons(ws_id)
+  if not ws_id or ws_id == "" then return end
+  local ws_num = tonumber(ws_id)
+  if not ws_num or not spaces[ws_num] then return end
   local icon_line = ""
   local no_app = true
-  local selected = env.FOCUSED_WORKSPACE
-  sbar.exec("sleep 0.1 && aerospace list-windows --format %{app-name} --workspace " .. selected, function(apps)
+  sbar.exec("sleep 0.1 && aerospace list-windows --format %{app-name} --workspace " .. ws_id, function(apps)
     for app in apps:gmatch("[^\r\n]+") do
       no_app = false
       local lookup = app_icons[app]
       local icon = ((lookup == nil) and app_icons["Default"] or lookup)
       icon_line = icon_line .. icon
     end
-
     if no_app then
       icon_line = " —"
     end
     sbar.animate("tanh", 10, function()
-      spaces[tonumber(selected)]:set({ label = icon_line })
+      spaces[ws_num]:set({ label = icon_line })
     end)
+  end)
+end
+
+space_window_observer:subscribe("aerospace_focus_change", function(env)
+  update_workspace_icons(env.FOCUSED_WORKSPACE)
+end)
+
+space_window_observer:subscribe("front_app_switched", function(env)
+  sbar.exec("aerospace list-workspaces --focused", function(ws)
+    update_workspace_icons(ws:gsub("[%s\n]+", ""))
   end)
 end)
 
