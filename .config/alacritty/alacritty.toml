@@ -22,7 +22,7 @@ history = 10000
 multiplier = 3
 
 [general]
-import = ["~/.config/alacritty/themes/tokyonight_night.toml"]
+import = ["~/.config/alacritty/themes/themes/tokyonight_night.toml"]
 
 [[keyboard.bindings]]
 key = "Key1"
