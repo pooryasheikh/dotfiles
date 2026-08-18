@@ -127,10 +127,17 @@ export K9S_CONFIG_DIR="$HOME/.config/k9s/"
 #=====================
 # Lazy-loaded completions
 #=====================
-lazyload kubectl -- 'source <(kubectl completion zsh)'
-lazyload helm    -- 'source <(helm completion zsh)'
-lazyload ut      -- 'source <(ut completions zsh)'
-lazyload yc      -- 'source '"$BREW_PREFIX"'/Caskroom/yandex-cloud-cli/*/yandex-cloud-cli/completion.zsh.inc'
+# Guarded: if the zsh-lazyload plugin failed to install, degrade to no
+# completions instead of throwing "command not found: lazyload" on every
+# shell start. Run `yadm bootstrap` to repair the plugin.
+if (( $+functions[lazyload] )); then
+  lazyload kubectl -- 'source <(kubectl completion zsh)'
+  lazyload helm    -- 'source <(helm completion zsh)'
+  lazyload ut      -- 'source <(ut completions zsh)'
+  lazyload yc      -- 'source '"$BREW_PREFIX"'/Caskroom/yandex-cloud-cli/*/yandex-cloud-cli/completion.zsh.inc'
+else
+  print -u2 "zshrc: zsh-lazyload missing, tool completions disabled (run: yadm bootstrap)"
+fi
 
 #================
 # Machine-local
