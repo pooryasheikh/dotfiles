@@ -1,423 +1,271 @@
+# Homebrew manifest -- hand-curated, installed with native `brew bundle`.
+#
+#   brew bundle install --file=~/.config/brewfile/Brewfile
+#   brew bundle check   --file=~/.config/brewfile/Brewfile --verbose
+#
+# Only top-level packages belong here. Dependencies resolve themselves.
+#
+# DO NOT install brew-file / brew-wrap. It rewrites this file on every `brew`
+# invocation with the full dependency closure (337 entries, the entire Qt suite
+# and openjdk included), which is both unreviewable and silently overwrites
+# whatever is committed here.
+#
+# DO NOT regenerate with `brew bundle dump` either: Homebrew 6 refuses to load
+# formulae from untrusted taps, so dump/leaves SILENTLY OMIT every entry in the
+# third-party taps section below -- sketchybar and borders included. brew.sh
+# runs `brew trust` to make them loadable. Edit this file by hand.
 
-# tap repositories and their packages
+# ===========================================================================
+# Taps
+# ===========================================================================
+tap "chipmk/tap"                 # docker-mac-net-connect
+tap "cloudflare/cloudflare"      # cf-terraforming
+tap "darksworm/tap"              # argonaut
+tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
+tap "fluxcd/tap"                 # flux
+tap "getsentry/tools"            # sentry-cli
+tap "hashicorp/tap"              # packer, vault
+tap "hudochenkov/sshpass"        # sshpass (ansible)
+tap "ksdme/tap"                  # ut
+tap "minio/stable"               # mc
+tap "mongodb/brew"               # mongodb-database-tools
+tap "nikitabobko/tap"            # aerospace
+tap "robusta-dev/krr"            # krr
+tap "ynqa/tap"                   # jnv
 
-tap 'homebrew/core'
-brew 'abseil'
-brew 'ada-url'
-brew 'age'
-brew 'ansible'
-brew 'aom'
-brew 'argocd'
-brew 'assimp'
-brew 'autoconf'
-brew 'automake'
-brew 'avro-c'
-brew 'awscli'
-brew 'bash'
-brew 'bat'
-brew 'bdw-gc'
-brew 'bison'
-brew 'boost'
-brew 'bpytop'
-brew 'brew-gem'
-brew 'brotli'
-brew 'c-ares'
-brew 'ca-certificates'
-brew 'cairo'
-brew 'cdrtools'
-brew 'certifi'
-brew 'cf-terraforming'
-brew 'cffi'
-brew 'chruby'
-brew 'cilium-cli'
-brew 'cloud-provider-kind'
-brew 'colordiff'
-brew 'coreutils'
-brew 'cryptography'
-brew 'dav1d'
-brew 'dbus'
-brew 'dive'
-brew 'docker'
-brew 'docker-completion'
-brew 'docutils'
-brew 'double-conversion'
-brew 'duktape'
-brew 'eza'
-brew 'fd'
-brew 'ffmpeg'
-brew 'ffuf'
-brew 'file-formula'
-brew 'flux'
-brew 'fmt'
-brew 'fontconfig'
-brew 'freetype'
-brew 'fribidi'
-brew 'fzf'
-brew 'gawk'
-brew 'gdbm'
-brew 'gettext'
-brew 'gh'
-brew 'ghostscript'
-brew 'giflib'
-brew 'git'
-brew 'git-crypt'
-brew 'git-delta'
-brew 'git-filter-repo'
-brew 'glab'
-brew 'glew'
-brew 'glib'
-brew 'gmp'
-brew 'gnu-getopt'
-brew 'gnu-tar'
-brew 'gnupg'
-brew 'gnutls'
-brew 'go'
-brew 'gource'
-brew 'gpgme'
-brew 'gpgmepp'
-brew 'gradle'
-brew 'gradle-completion'
-brew 'graphite2'
-brew 'grep'
-brew 'guile'
-brew 'gumbo-parser'
-brew 'harfbuzz'
-brew 'hdrhistogram_c'
-brew 'hey'
-brew 'highlight'
-brew 'highway'
-brew 'hstr'
-brew 'htop'
-brew 'httpie'
-brew 'hugo'
-brew 'hunspell'
-brew 'hyperfine'
-brew 'icu4c@78'
-brew 'imagemagick'
-brew 'imath'
-brew 'infracost'
-brew 'ipinfo-cli'
-brew 'jansson'
-brew 'jasper'
-brew 'jbig2dec'
-brew 'jemalloc'
-brew 'jnv'
-brew 'jpeg-turbo'
-brew 'jpeg-xl'
-brew 'jq'
-brew 'k9s'
-brew 'kaskade'
-brew 'kcat'
-brew 'kind'
-brew 'krb5'
-brew 'ktea'
-brew 'kubectx'
-brew 'kubernetes-cli'
-brew 'kustomize'
-brew 'lame'
-brew 'lazygit'
-brew 'leptonica'
-brew 'libarchive'
-brew 'libassuan'
-brew 'libavif'
-brew 'libb2'
-brew 'libcbor'
-brew 'libdatrie'
-brew 'libde265'
-brew 'libdeflate'
-brew 'libev'
-brew 'libevent'
-brew 'libffi'
-brew 'libfido2'
-brew 'libgcrypt'
-brew 'libgit2'
-brew 'libgpg-error'
-brew 'libheif'
-brew 'libidn'
-brew 'libidn2'
-brew 'libksba'
-brew 'libmagic'
-brew 'libmng'
-brew 'libnghttp2'
-brew 'libnghttp3'
-brew 'libngtcp2'
-brew 'libpng'
-brew 'libproxy'
-brew 'librdkafka'
-brew 'libserdes'
-brew 'libsodium'
-brew 'libssh'
-brew 'libssh2'
-brew 'libtasn1'
-brew 'libthai'
-brew 'libtiff'
-brew 'libtommath'
-brew 'libtool'
-brew 'libudfread'
-brew 'libunistring'
-brew 'libusb'
-brew 'libuv'
-brew 'libvmaf'
-brew 'libvpx'
-brew 'libx11'
-brew 'libxau'
-brew 'libxcb'
-brew 'libxdmcp'
-brew 'libxext'
-brew 'libxrender'
-brew 'libyaml'
-brew 'libzip'
-brew 'litehtml'
-brew 'little-cms2'
-brew 'llhttp'
-brew 'lpeg'
-brew 'lua'
-brew 'luajit'
-brew 'luv'
-brew 'lz4'
-brew 'lzlib'
-brew 'lzo'
-brew 'm4'
-brew 'mariadb-connector-c'
-brew 'mas'
-brew 'maven'
-brew 'md4c'
-brew 'merve'
-brew 'mongosh'
-brew 'mpdecimal'
-brew 'mpfr'
-brew 'mtr'
-brew 'mydumper'
-brew 'mysql-client'
-brew 'nbytes'
-brew 'ncurses'
-brew 'neovim'
-brew 'nettle'
-brew 'nghttp2'
-brew 'node'
-brew 'nowplaying-cli'
-brew 'npth'
-brew 'nspr'
-brew 'nss'
-brew 'onefetch'
-brew 'oniguruma'
-brew 'openconnect'
-brew 'openexr'
-brew 'openjdk'
-brew 'openjpeg'
-brew 'openjph'
-brew 'openssl@3'
-brew 'opus'
-brew 'osx-cpu-temp'
-brew 'p11-kit'
-brew 'pango'
-brew 'pcre'
-brew 'pcre2'
-brew 'percona-xtrabackup'
-brew 'pinentry'
-brew 'pixman'
-brew 'pkgconf'
-brew 'poppler'
-brew 'popt'
-brew 'portaudio'
-brew 'postgresql@16'
-brew 'presenterm'
-brew 'protobuf'
-brew 'pwgen'
-brew 'pycparser'
-brew 'python@3.14'
-brew 'qt'
-brew 'qt3d'
-brew 'qt5compat'
-brew 'qtbase'
-brew 'qtcanvaspainter'
-brew 'qtcharts'
-brew 'qtconnectivity'
-brew 'qtdatavis3d'
-brew 'qtdeclarative'
-brew 'qtgraphs'
-brew 'qtgrpc'
-brew 'qthttpserver'
-brew 'qtimageformats'
-brew 'qtlanguageserver'
-brew 'qtlocation'
-brew 'qtlottie'
-brew 'qtmultimedia'
-brew 'qtnetworkauth'
-brew 'qtpositioning'
-brew 'qtquick3d'
-brew 'qtquick3dphysics'
-brew 'qtquickeffectmaker'
-brew 'qtquicktimeline'
-brew 'qtremoteobjects'
-brew 'qtscxml'
-brew 'qtsensors'
-brew 'qtserialbus'
-brew 'qtserialport'
-brew 'qtshadertools'
-brew 'qtspeech'
-brew 'qtsvg'
-brew 'qttasktree'
-brew 'qttools'
-brew 'qttranslations'
-brew 'qtvirtualkeyboard'
-brew 'qtwebchannel'
-brew 'qtwebengine'
-brew 'qtwebsockets'
-brew 'qtwebview'
-brew 'rclone'
-brew 'readline'
-brew 'reattach-to-user-namespace'
-brew 'ripgrep'
-brew 'rpds-py'
-brew 'rsync'
-brew 'ruby-install'
-brew 'screenresolution'
-brew 'sdl2-compat'
-brew 'sdl2_image'
-brew 'sevenzip'
-brew 'simdjson'
-brew 'simdutf'
-brew 'skopeo'
-brew 'snappy'
-brew 'socket_vmnet'
-brew 'sops'
-brew 'sqlite'
-brew 'sshpass'
-brew 'stern'
-brew 'stoken'
-brew 'svt-av1'
-brew 'swaks'
-brew 'switchaudio-osx'
-brew 'tcl-tk'
-brew 'terraform-docs'
-brew 'terragrunt'
-brew 'tesseract'
-brew 'tfenv'
-brew 'tldr'
-brew 'tmux'
-brew 'tree'
-brew 'tree-sitter'
-brew 'trivy'
-brew 'unbound'
-brew 'unibilium'
-brew 'utf8proc'
-brew 'uv'
-brew 'uvwasi'
-brew 'watch'
-brew 'webp'
-brew 'wget'
-brew 'wireguard-go'
-brew 'wireguard-tools'
-brew 'x264'
-brew 'x265'
-brew 'xorgproto'
-brew 'xxhash'
-brew 'xz'
-brew 'yadm'
-brew 'yajl'
-brew 'yarn'
-brew 'yazi'
-brew 'yq'
-brew 'z'
-brew 'zlib'
-brew 'zlib-ng-compat'
-brew 'zoxide'
-brew 'zsh'
-brew 'zsh-autosuggestions'
-brew 'zsh-completions'
-brew 'zsh-syntax-highlighting'
-brew 'zstd'
+# ===========================================================================
+# Shell & prompt
+# ===========================================================================
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-completions"
+brew "zsh-syntax-highlighting"
+brew "fzf"
+brew "hstr"                      # ctrl-r history search (alias h)
+brew "z"
+brew "zoxide"
 
-tap 'homebrew/cask'
-cask 'alacritty'
-cask 'brave-browser'
-cask 'claude-code'
-cask 'docker-desktop'
-cask 'finicky'
-cask 'font-hack-nerd-font'
-cask 'font-jetbrains-mono-nerd-font'
-cask 'font-sf-mono'
-cask 'font-sf-pro'
-cask 'font-symbols-only-nerd-font'
-cask 'gcloud-cli'
-cask 'happ'
-cask 'maccy'
-cask 'microsoft-teams'
-cask 'postman'
-cask 'pritunl'
-cask 'sf-symbols'
-cask 'slack'
-cask 'telegram'
-cask 'the-unarchiver'
-cask 'vagrant'
-cask 'yandex-cloud-cli'
+# ===========================================================================
+# Core CLI
+# ===========================================================================
+brew "coreutils"                 # gnubin is on PATH ahead of BSD tools
+brew "gawk"
+brew "gnu-tar"
+brew "tree"
+brew "watch"
+brew "rsync"
+brew "wget"
+brew "bat"
+brew "eza"                       # aliases ls / ll
+brew "fd"
+brew "ripgrep"
+brew "yq"
+brew "jq"
+brew "jnv"                       # interactive jq TUI
+brew "sevenzip"
+brew "colordiff"                 # alias diff
+brew "highlight"
+brew "tldr"
+brew "hyperfine"
+brew "file-formula"
+brew "yazi"                      # file manager
+brew "gnupg"
+brew "pwgen"
+brew "mas"                       # App Store CLI, for the mas entries below
 
-tap 'homebrew/bundle'
+# ===========================================================================
+# Editor / terminal / WM
+# ===========================================================================
+brew "neovim"
+brew "tmux"
+brew "reattach-to-user-namespace"        # tmux-yank on macOS
+brew "felixkratz/formulae/sketchybar"    # status bar (~30 tracked config files)
+brew "felixkratz/formulae/borders"       # JankyBorders, aerospace companion
+brew "nowplaying-cli"                    # sketchybar media widget
+brew "switchaudio-osx"                   # sketchybar volume widget
 
-tap 'homebrew/services'
+# ===========================================================================
+# Git
+# ===========================================================================
+brew "git"
+brew "git-delta"                 # wired up as git's pager in .config/git/config
+brew "git-crypt"
+brew "git-filter-repo"
+brew "lazygit"
+brew "gh"
+brew "glab"                      # GitLab CLI -- the one to use, not gh
+brew "onefetch"
+brew "gource"
 
-tap 'chipmk/tap'
-brew 'docker-mac-net-connect'
+# ===========================================================================
+# Kubernetes
+# ===========================================================================
+brew "kubernetes-cli"
+brew "kubectx"
+brew "kustomize"
+brew "k9s"
+brew "stern"
+brew "kind"
+brew "cloud-provider-kind"
+brew "cilium-cli"
+brew "argocd"
+brew "fluxcd/tap/flux"           # used by k9s plugins.yaml + scripts/flux-retries
+brew "robusta-dev/krr/krr"       # resource recommendations
+brew "skopeo"
+brew "dive"
+brew "trivy"
 
-tap 'cloudflare/cloudflare'
+# ===========================================================================
+# Infrastructure as code
+# ===========================================================================
+brew "tfenv"                     # terraform itself is managed by tfenv
+brew "terragrunt"
+brew "terraform-docs"
+brew "infracost"
+brew "hashicorp/tap/packer"
+brew "hashicorp/tap/vault"
+brew "ansible"
+brew "hudochenkov/sshpass/sshpass"       # ansible ssh password auth
+brew "cloudflare/cloudflare/cf-terraforming"
 
-tap 'darksworm/tap'
-cask 'argonaut'
+# ===========================================================================
+# Cloud
+# ===========================================================================
+brew "awscli"
+brew "rclone"
+brew "minio/stable/mc"
+brew "ipinfo-cli"
+brew "getsentry/tools/sentry-cli"
 
-tap 'derailed/k9s'
+# ===========================================================================
+# Containers & networking
+# ===========================================================================
+brew "docker"
+brew "chipmk/tap/docker-mac-net-connect" # route to container IPs from the host
+brew "openconnect"
+brew "wireguard-go"
+brew "wireguard-tools"
+brew "mtr"
+brew "httpie"
+brew "hey"                       # load generator
+brew "swaks"                     # SMTP testing
+brew "ffuf"                      # web fuzzer
 
-tap 'felixkratz/formulae'
-brew 'borders'
-brew 'sketchybar'
+# ===========================================================================
+# Databases & Kafka
+# ===========================================================================
+brew "postgresql@16"
+brew "mysql-client"
+brew "mydumper"
+brew "percona-xtrabackup"
+brew "mongosh"
+brew "mongodb/brew/mongodb-database-tools"
+brew "kcat"                      # Kafka CLI
+brew "kaskade"                   # Kafka TUI
+brew "ktea"                      # Kafka TUI
 
-tap 'fluxcd/tap'
+# ===========================================================================
+# Secrets
+# ===========================================================================
+brew "sops"                      # git diff driver + scripts/k8secret
+brew "age"
+brew "ut"                        # completions lazyloaded in .zshrc
 
-tap 'getsentry/tools'
-brew 'sentry-cli'
+# ===========================================================================
+# Languages & runtimes
+# ===========================================================================
+brew "go"
+brew "node"
+brew "yarn"
+brew "uv"                        # python packaging
+brew "ruby-install"
+brew "chruby"
+brew "brew-gem"
+brew "maven"                     # pulls openjdk
+brew "gradle"                    # pulls openjdk
 
-tap 'hashicorp/tap'
-brew 'packer'
-brew 'vault'
+# ===========================================================================
+# Media & docs
+# ===========================================================================
+brew "ffmpeg"
+brew "imagemagick"
+brew "hugo"
+brew "presenterm"                # terminal slides
+brew "neofetch"
 
-tap 'hudochenkov/sshpass'
+# ===========================================================================
+# System monitoring
+# ===========================================================================
+brew "htop"
+brew "bpytop"                    # alias btop
 
-tap 'jesseduffield/lazygit'
+# ===========================================================================
+# Dotfiles
+# ===========================================================================
+brew "yadm"
 
-tap 'jonas-grgt/ktea'
+# ===========================================================================
+# Casks
+# ===========================================================================
+cask "alacritty"                 # primary terminal
+cask "aerospace"
+cask "maccy"
+cask "finicky"
+cask "flux-app"
+cask "the-unarchiver"
+cask "keepassxc"
+cask "brave-browser"
+cask "claude-code"
+cask "docker-desktop"
+cask "gcloud-cli"
+cask "yandex-cloud-cli"
+cask "darksworm/tap/argonaut"    # ArgoCD TUI
+cask "pritunl"                   # VPN
+cask "vagrant"                   # review: CLI-only, no usable ARM provider
+cask "postman"                   # review: last opened 2026-05-21; httpie covers most
+cask "happ"                      # review: last opened 2026-04-27
+cask "sf-symbols"
 
-tap 'ksdme/tap'
-brew 'ut'
+# --- chat -------------------------------------------------------------------
+cask "slack"
+cask "telegram"
+cask "microsoft-teams"
 
-tap 'minio/stable'
-brew 'mc'
+# --- fonts ------------------------------------------------------------------
+cask "font-hack-nerd-font"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-symbols-only-nerd-font"
+cask "font-sf-mono"
+cask "font-sf-pro"
 
-tap 'mongodb/brew'
-brew 'mongodb-database-tools'
+# ===========================================================================
+# Mac App Store
+# ===========================================================================
+mas "Xcode", id: 497799835
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "WireGuard", id: 1451685025
+mas "GarageBand", id: 682658836
+mas "GoPro Webcam", id: 6477835262
 
-tap 'nikitabobko/tap'
-cask 'aerospace'
-
-tap 'rcmdnk/file'
-
-tap 'robusta-dev/krr'
-brew 'krr'
-
-tap 'sozercan/repo'
-
-tap 'wata727/tflint'
-
-tap 'ynqa/tap'
-
-# Other Homebrew packages
-brew 'neofetch'
-brew 'openssl@1.1'
-
-# App Store applications
-mas 'GarageBand (10.4.3)', id: 682658836
-mas 'GoPro Webcam (1.6.2)', id: 6477835262
-mas 'Keynote (11.1)', id: 409183694
-mas 'Numbers (11.1)', id: 409203825
-mas 'Pages (11.1)', id: 409201541
-mas 'WireGuard (1.0.16)', id: 1451685025
-mas 'Xcode (26.2)', id: 497799835
+# ===========================================================================
+# Removed -- recorded so they do not get reinstalled by reflex
+# ===========================================================================
+# cask "iterm2"                  # last opened 2025-09-26; replaced by alacritty
+# cask "offset-explorer"         # never launched once; kcat/kaskade/ktea cover Kafka
+# cask "discord"                 # cask present but Discord.app was deleted by hand
+# cask "db-browser-for-sqlite"   # same -- app deleted by hand
+# cask "mattermost"              # same -- Caskroom holds only metadata
+# cask "multipass"               # never launched once
+# cask "flux"                    # renamed upstream to flux-app; both were installed
+# cask "docker"                  # renamed upstream to docker-desktop; both installed
+# brew "xclip"                   # Linux clipboard tool; macOS uses pbcopy
+# brew "node@14"                 # EOL, and /usr/local/opt paths no longer exist
+# brew "iproute2mac"             # one-off experiment
+# brew "bottom"                  # htop + bpytop already cover this
+# brew "slides"                  # presenterm covers this
+# brew "s3cmd"                   # awscli + rclone + mc cover this
+# brew "postgresql@15"           # @16 is installed too
+# brew "brew-file"               # replaced by native `brew bundle`; see header
+# brew "flux@2.2"                # stale pin shadowing the current flux

@@ -45,7 +45,7 @@ if ! command -v yadm >/dev/null 2>&1; then
     log "Installing yadm"
     brew install yadm
 fi
-ok "yadm $(yadm --version | awk '{print $3}')"
+ok "yadm $(yadm --version 2>/dev/null | awk '/^yadm version/{print $3}')"
 
 # --- clone ------------------------------------------------------------------
 if yadm rev-parse --git-dir >/dev/null 2>&1; then
