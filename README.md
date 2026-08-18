@@ -19,7 +19,6 @@ machine is `work` or `personal`, then runs `yadm bootstrap`.
 | `10-oh-my-zsh.sh` | oh-my-zsh, powerlevel10k, `zsh-lazyload`, `zsh-vi-mode` |
 | `20-scripts.sh` | Symlinks `~/.config/scripts/*` into `~/.local/bin` |
 | `30-tmux.sh` | Clones tpm and installs the plugins declared in `tmux.conf` |
-| `40-alacritty-themes.sh` | Clones `alacritty-theme` |
 | `50-kubernetes.sh` | krew plus the `ctx`, `ns`, `node-shell` plugins |
 | `60-tfenv.sh` | Installs the Terraform version pinned in `.config/tfenv/version` |
 | `70-nvim.sh` | `nvim --headless +Lazy! restore` against the tracked `lazy-lock.json` |
