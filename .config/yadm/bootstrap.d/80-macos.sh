@@ -42,6 +42,11 @@ defaults write com.apple.screencapture location -string "$HOME/Pictures/Screensh
 defaults write com.apple.screencapture disable-shadow -bool true
 defaults write com.apple.screencapture type -string "png"
 
+# --- keyboard shortcuts: free up Ctrl+Left/Right for apps (nvim split
+# resize, shell/editor word-jump) instead of Mission Control space-switching -
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 79 '<dict><key>enabled</key><false/></dict>'  # Move left a space (^Left)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 81 '<dict><key>enabled</key><false/></dict>'  # Move right a space (^Right)
+
 # --- misc -------------------------------------------------------------------
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
