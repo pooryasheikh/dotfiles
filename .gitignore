@@ -65,6 +65,13 @@
 /.config/glab-cli/*
 !/.config/glab-cli/aliases.yml
 
+# claude: settings.json is portable; everything else (conversation history,
+# auto-memory, shell snapshots, session state, credentials) is sensitive
+# and/or machine-specific and must stay local.
+!/.config/claude/
+/.config/claude/*
+!/.config/claude/settings.json
+
 # tfenv: pin the version, not the downloaded toolchains.
 !/.config/tfenv/
 /.config/tfenv/*
