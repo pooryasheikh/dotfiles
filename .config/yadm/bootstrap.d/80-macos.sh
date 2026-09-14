@@ -47,6 +47,23 @@ defaults write com.apple.screencapture type -string "png"
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 79 '<dict><key>enabled</key><false/></dict>'  # Move left a space (^Left)
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 81 '<dict><key>enabled</key><false/></dict>'  # Move right a space (^Right)
 
+# --- Secure Input -----------------------------------------------------------
+# Terminal.app's "Secure Keyboard Entry" calls EnableSecureEventInput() and
+# holds it for as long as Terminal runs. That is a SYSTEM-WIDE flag: while it is
+# set, no application can read key events, so AeroSpace silently stops
+# responding to every shortcut ("AeroSpace cannot respond to keyboard shortcuts
+# while Secure Input is active"). It is a menu item that is easy to hit by
+# accident, and the setting persists across relaunches.
+#
+# Which process holds it:
+#   ioreg -l -w 0 | LC_ALL=C sed -n 's/.*"kCGSSessionSecureInputPID"=\([0-9]*\).*/\1/p'
+defaults write com.apple.Terminal SecureKeyboardEntry -bool false
+if pgrep -xq Terminal; then
+    echo "  NOTE: Terminal.app is running, so it may rewrite this preference on quit." >&2
+    echo "        If AeroSpace shortcuts stay dead, quit Terminal:" >&2
+    echo "          osascript -e 'quit app \"Terminal\"'" >&2
+fi
+
 # --- misc -------------------------------------------------------------------
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
