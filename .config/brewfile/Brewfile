@@ -224,7 +224,6 @@ brew "yadm"
 cask "aerospace"
 cask "maccy"
 cask "finicky"
-cask "flux-app"
 cask "the-unarchiver"
 cask "keepassxc"
 cask "brave-browser"
@@ -272,6 +271,9 @@ mas "GoPro Webcam", id: 6477835262
 # cask "mattermost"              # same -- Caskroom holds only metadata
 # cask "multipass"               # never launched once
 # cask "flux"                    # renamed upstream to flux-app; both were installed
+# cask "flux-app"               # f.lux: justgetflux.com is unreachable from the
+#                               # work network (curl 35, connection timed out), and
+#                               # macOS Night Shift covers the same ground
 # cask "docker"                  # renamed upstream to docker-desktop; both installed
 # brew "xclip"                   # Linux clipboard tool; macOS uses pbcopy
 # brew "node@14"                 # EOL, and /usr/local/opt paths no longer exist
