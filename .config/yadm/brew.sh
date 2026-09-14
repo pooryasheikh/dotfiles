@@ -84,5 +84,31 @@ if [[ "$CLASS" == "work" ]]; then
     echo "class=work: skipping Mac App Store apps (mas)"
 fi
 
+# hashicorp/tap cannot be cloned on Homebrew 7: its vagrant.rb declares a URL
+# only for Linux/Intel, so the formula is invalid on macOS and Homebrew rejects
+# the whole tap -- which would take packer and vault with it, and make brew-file
+# abort the entire install. Mirror just those two (valid) formulae into a local
+# tap instead. Fetched fresh each bootstrap so versions stay current.
+mirror_hashicorp_formulae() {
+    local dest upstream f
+    dest="$(brew --repository)/Library/Taps/local/homebrew-hashicorp/Formula"
+    upstream="https://raw.githubusercontent.com/hashicorp/homebrew-tap/master/Formula"
+    mkdir -p "$dest"
+    for f in packer vault; do
+        if curl -fsSL "$upstream/$f.rb" -o "$dest/$f.rb.tmp"; then
+            mv "$dest/$f.rb.tmp" "$dest/$f.rb"
+        else
+            rm -f "$dest/$f.rb.tmp"
+            if [ -f "$dest/$f.rb" ]; then
+                echo "  could not refresh $f.rb, keeping the existing copy" >&2
+            else
+                echo "  could not fetch $f.rb -- $f will not install" >&2
+            fi
+        fi
+    done
+    echo "Local tap local/hashicorp (packer, vault) ✅"
+}
+mirror_hashicorp_formulae
+
 brew-file install
 echo "Brewfile packages ✅"

@@ -125,11 +125,14 @@ brew "tfenv"                     # terraform itself is managed by tfenv
 brew "terragrunt"
 brew "terraform-docs"
 brew "infracost"
-# brew "hashicorp/tap/packer"   # hashicorp/tap cannot be tapped on Homebrew 7:
-# brew "hashicorp/tap/vault"    # its vagrant.rb has no URL and two casks lack
-#                               # Linux stanzas, so the whole tap fails validation
-#                               # and brew-file aborts. Neither is in homebrew-core
-#                               # (BUSL relicensing). Install by hand when needed.
+# From the local/hashicorp tap, mirrored by brew.sh. hashicorp/tap itself
+# cannot be cloned on Homebrew 7 -- its vagrant.rb declares a URL only for
+# Linux/Intel, so the formula is invalid everywhere else and Homebrew rejects
+# the entire tap, taking packer and vault with it. Both are absent from
+# homebrew-core (BUSL relicensing), so brew.sh mirrors just these two valid
+# formulae into a local tap.
+brew "local/hashicorp/packer"
+brew "local/hashicorp/vault"
 brew "ansible"
 brew "sshpass"                           # ansible ssh password auth
 brew "cloudflare/cloudflare/cf-terraforming"
@@ -226,7 +229,6 @@ cask "gcloud-cli"
 cask "yandex-cloud-cli"
 cask "darksworm/tap/argonaut"    # ArgoCD TUI
 cask "pritunl"                   # VPN
-cask "vagrant"                   # review: CLI-only, no usable ARM provider
 cask "postman"                   # review: last opened 2026-05-21; httpie covers most
 cask "happ"                      # review: last opened 2026-04-27
 cask "sf-symbols"
