@@ -125,12 +125,22 @@ brew "tfenv"                     # terraform itself is managed by tfenv
 brew "terragrunt"
 brew "terraform-docs"
 brew "infracost"
-# From the local/hashicorp tap, mirrored by brew.sh. hashicorp/tap itself
-# cannot be cloned on Homebrew 7 -- its vagrant.rb declares a URL only for
-# Linux/Intel, so the formula is invalid everywhere else and Homebrew rejects
-# the entire tap, taking packer and vault with it. Both are absent from
-# homebrew-core (BUSL relicensing), so brew.sh mirrors just these two valid
-# formulae into a local tap.
+# TEMPORARY WORKAROUND for an upstream bug -- revert when it is fixed.
+#
+# HashiCorp documents `brew tap hashicorp/tap` (https://developer.hashicorp.com/
+# vault/install) and that IS the right way. It just cannot be cloned on
+# Homebrew 7 right now: vagrant.rb declares a URL only under
+# `if OS.linux? && Hardware::CPU.intel?`, and the Boundary Desktop / Vagrant
+# casks lack Linux stanzas. Homebrew 7 validates every formula and cask in a
+# tap for every platform at clone time, so it rejects the whole tap -- taking
+# packer and vault, which are perfectly valid, down with it.
+#   upstream: https://github.com/hashicorp/homebrew-tap/issues/405 (open)
+# Neither is in homebrew-core (BUSL relicensing), so brew.sh mirrors just these
+# two formulae into a local tap, fetched from hashicorp/homebrew-tap itself.
+#
+# TO REVERT once #405 is fixed: restore `tap "hashicorp/tap"` above, change the
+# two lines below back to hashicorp/tap/packer and hashicorp/tap/vault, and
+# delete mirror_hashicorp_formulae from .config/yadm/brew.sh.
 brew "local/hashicorp/packer"
 brew "local/hashicorp/vault"
 brew "ansible"
