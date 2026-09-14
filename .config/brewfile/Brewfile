@@ -216,7 +216,11 @@ brew "yadm"
 # ===========================================================================
 # Casks
 # ===========================================================================
-cask "alacritty"                 # primary terminal
+# cask "alacritty"               # DISABLED in homebrew-cask on 2026-09-01:
+#                               # disable! because: :fails_gatekeeper_check.
+#                               # `brew install --cask alacritty` now hard-errors
+#                               # and aborts the whole brew-file run. Installed
+#                               # from the upstream DMG by bootstrap.d/15-alacritty.sh
 cask "aerospace"
 cask "maccy"
 cask "finicky"

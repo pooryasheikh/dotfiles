@@ -38,6 +38,7 @@ TRUSTED_TAPS=(
     hashicorp/tap
     ksdme/tap
     minio/stable
+    rcmdnk/file
     mongodb/brew
     nikitabobko/tap
     robusta-dev/krr
