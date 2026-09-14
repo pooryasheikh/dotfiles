@@ -6,7 +6,7 @@ customCommands:
   - key: "C"
     context: "files"
     description: "Generate commit message with task number from branch [TASK-123]: ..."
-    command: "TASK=$(git branch --show-current | grep -oE '^[A-Z]+-[0-9]+'); git diff --staged | /opt/homebrew/bin/claude -p --no-session-persistence \"Generate a concise git commit message for these staged changes. The message MUST follow this exact format: [$TASK]: <short description>. Output ONLY the raw commit message with no markdown, no code blocks, no backticks, no explanations.\" --model claude-sonnet-4-6 --output-format text > /tmp/commit_msg && GIT_EDITOR=vim git commit -e -F /tmp/commit_msg"
+    command: 'TASK=$(git branch --show-current | grep -oE ''^[A-Z]+-[0-9]+''); git diff --staged | claude -p --no-session-persistence "Generate a concise git commit message for these staged changes. The message MUST follow this exact format: [$TASK]: <short description>. Output ONLY the raw commit message with no markdown, no code blocks, no backticks, no explanations." --model claude-sonnet-4-6 --output-format text > /tmp/commit_msg && GIT_EDITOR=vim git commit -e -F /tmp/commit_msg'
     output: terminal
 
   # ── feat(SCOPE): … / fix(SCOPE): … ─────────────────────────────────────────
@@ -31,5 +31,5 @@ customCommands:
   - key: "S"
     context: "files"
     description: "Generate semver/conventional commit message (feat: ..., fix: ...)"
-    command: "BRANCH=$(git branch --show-current); git diff --staged | /opt/homebrew/bin/claude -p --no-session-persistence \"$(sed \"s|@SCOPE@|$BRANCH|\" ~/.config/lazygit/semver-commit-prompt.md)\" --model claude-sonnet-4-6 --output-format text > /tmp/commit_msg && GIT_EDITOR=vim git commit -e -F /tmp/commit_msg"
+    command: 'BRANCH=$(git branch --show-current); git diff --staged | claude -p --no-session-persistence "$(sed "s|@SCOPE@|$BRANCH|" ~/.config/lazygit/semver-commit-prompt.md)" --model claude-sonnet-4-6 --output-format text > /tmp/commit_msg && GIT_EDITOR=vim git commit -e -F /tmp/commit_msg'
     output: terminal

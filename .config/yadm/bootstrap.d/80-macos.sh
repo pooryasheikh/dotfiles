@@ -29,12 +29,26 @@ defaults write com.apple.finder _FXSortFoldersFirst -bool true
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true  # no .DS_Store on shares
 
 # --- dock: aerospace/sketchybar own the screen, get the Dock out of the way --
+# Captured from the personal machine so both Macs match.
 defaults write com.apple.dock autohide -bool true
-defaults write com.apple.dock autohide-delay -float 0
-defaults write com.apple.dock autohide-time-modifier -float 0.15
+defaults write com.apple.dock autohide-delay -float 0        # no delay before it slides out
+defaults write com.apple.dock autohide-time-modifier -float 0  # and no slide animation
+defaults write com.apple.dock orientation -string right      # right edge; sketchybar owns the top
+defaults write com.apple.dock tilesize -int 37
+defaults write com.apple.dock largesize -int 128
+defaults write com.apple.dock mineffect -string genie
+defaults write com.apple.dock minimize-to-application -bool false
+defaults write com.apple.dock launchanim -bool false         # no bouncing icon on launch
+defaults write com.apple.dock show-process-indicators -bool true
+defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock mru-spaces -bool false        # required by aerospace
 defaults write com.apple.dock expose-group-apps -bool true
+
+# --- menu bar ---------------------------------------------------------------
+# sketchybar replaces the system menu bar, so hide the real one. This is the
+# "Automatically hide and show the menu bar: Always" setting.
+defaults write NSGlobalDomain _HIHideMenuBar -bool true
 
 # --- screenshots ------------------------------------------------------------
 mkdir -p "$HOME/Pictures/Screenshots"
