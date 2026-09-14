@@ -3,25 +3,56 @@
 #
 # The homebrew-cask formula was DISABLED on 2026-09-01:
 #   disable! date: "2026-09-01", because: :fails_gatekeeper_check
-# Alacritty's macOS builds are not notarized, so Homebrew dropped the cask and
-# `brew install --cask alacritty` now hard-errors -- which aborted the whole
-# brew-file run. This installs the same artifact the cask used to.
+# Alacritty's macOS builds are not notarized, so homebrew-cask dropped it. A
+# disabled cask cannot be installed at all -- not with --cask, not with --force
+# -- and the hard error aborts the whole brew-file run.
 #
-# NOTE: this clears the quarantine attribute, which is exactly the Gatekeeper
-# check Homebrew disabled the cask over. That is a deliberate choice to trust
-# upstream Alacritty releases. If you would rather not, install a notarized
-# terminal instead (ghostty, wezterm and kitty are all still in homebrew-cask).
+# This resolves the latest release itself so there is no version to maintain
+# here, and re-running bootstrap upgrades in place, the way brew would have.
+#
+# NOTE: it clears the quarantine attribute, which is the Gatekeeper check
+# homebrew-cask disabled the cask over -- a deliberate choice to trust upstream
+# Alacritty releases. ghostty, wezterm and kitty are notarized alternatives
+# still in homebrew-cask if that trade is unwanted.
 set -euo pipefail
 
-VERSION="0.17.0"
 APP="/Applications/Alacritty.app"
+# Used only if GitHub cannot be reached; not a version to keep updated.
+FALLBACK_VERSION="0.17.0"
 
-if [[ -d "$APP" ]]; then
-    echo "Alacritty already installed ✅"
+installed_version() {
+    [[ -d "$APP" ]] || return 1
+    /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' \
+        "$APP/Contents/Info.plist" 2>/dev/null
+}
+
+latest_version() {
+    # The releases/latest redirect gives the newest tag without touching the
+    # GitHub API, which is rate-limited to 60 requests/hour for anonymous users.
+    local url tag
+    url="$(curl -fsSLI -o /dev/null -w '%{url_effective}' --max-time 20 \
+        https://github.com/alacritty/alacritty/releases/latest 2>/dev/null)" || return 1
+    tag="${url##*/}"
+    case "$tag" in v[0-9]*.[0-9]*) printf '%s' "${tag#v}" ;; *) return 1 ;; esac
+}
+
+have="$(installed_version || true)"
+want="$(latest_version || true)"
+
+if [[ -z "$want" ]]; then
+    if [[ -n "$have" ]]; then
+        echo "Alacritty $have ✅ (could not check for updates)"
+        exit 0
+    fi
+    echo "  could not resolve the latest release, falling back to $FALLBACK_VERSION" >&2
+    want="$FALLBACK_VERSION"
+fi
+
+if [[ "$have" == "$want" ]]; then
+    echo "Alacritty $have ✅"
     exit 0
 fi
 
-DMG_URL="https://github.com/alacritty/alacritty/releases/download/v${VERSION}/Alacritty-v${VERSION}.dmg"
 TMP="$(mktemp -d)"
 MOUNT=""
 cleanup() {
@@ -30,20 +61,22 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "  downloading Alacritty ${VERSION}"
-if ! curl -fsSL --max-time 120 -o "$TMP/alacritty.dmg" "$DMG_URL"; then
-    echo "  could not download $DMG_URL -- skipping Alacritty" >&2
+echo "  installing Alacritty ${want}${have:+ (replacing $have)}"
+if ! curl -fsSL --max-time 180 -o "$TMP/alacritty.dmg" \
+    "https://github.com/alacritty/alacritty/releases/download/v${want}/Alacritty-v${want}.dmg"; then
+    echo "  download failed -- leaving Alacritty as-is" >&2
     exit 0
 fi
 
 MOUNT="$(hdiutil attach -nobrowse -readonly -mountrandom "$TMP" "$TMP/alacritty.dmg" \
-    | awk '/\/Volumes|\/private\/tmp|'"${TMP//\//\\/}"'/ {print $NF; exit}')"
+    | awk '/Apple_HFS|Apple_APFS/ {print $NF; exit}')"
 if [[ -z "$MOUNT" || ! -d "$MOUNT/Alacritty.app" ]]; then
-    echo "  could not mount the DMG -- skipping Alacritty" >&2
+    echo "  could not mount the DMG -- leaving Alacritty as-is" >&2
     exit 0
 fi
 
+rm -rf "$APP"
 cp -R "$MOUNT/Alacritty.app" /Applications/
 xattr -dr com.apple.quarantine "$APP" 2>/dev/null || true
 
-echo "Alacritty ${VERSION} ✅"
+echo "Alacritty $(installed_version) ✅"
