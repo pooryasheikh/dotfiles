@@ -39,6 +39,13 @@ plugins=(
     zsh-lazyload
 )
 
+# oh-my-zsh refuses to load completions from group-writable directories and
+# prints a warning at every startup -- which also breaks p10k's instant prompt.
+# bootstrap fixes the permissions where it can. On a managed machine where the
+# directory is not yours to chmod, it drops this marker instead and the check
+# is skipped rather than warning forever. Must be set before oh-my-zsh loads.
+[[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/disable-compfix" ]] && ZSH_DISABLE_COMPFIX=true
+
 [[ -e $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
 
 #=================

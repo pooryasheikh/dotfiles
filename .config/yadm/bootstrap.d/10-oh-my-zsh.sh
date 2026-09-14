@@ -57,9 +57,20 @@ if [[ -n "$insecure" ]]; then
         if chmod g-w,o-w "$dir" 2>/dev/null; then
             echo "    fixed $dir"
         else
-            echo "    could not chmod $dir (not owned by you?)" >&2
+            echo "    could not chmod $dir (not owned by you)" >&2
+            unfixable=1
         fi
     done <<< "$insecure"
+
+    # Anything left unfixable means no admin rights over that directory. Rather
+    # than warn on every shell start forever, drop a marker .zshrc reads to skip
+    # oh-my-zsh's compfix check. Untracked, so it stays machine-local.
+    if [[ -n "${unfixable:-}" ]]; then
+        mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+        touch "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/disable-compfix"
+        echo "    -> set ZSH_DISABLE_COMPFIX marker; delete it if you regain write access:" >&2
+        echo "       rm ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/disable-compfix" >&2
+    fi
 fi
 
 echo "Oh My Zsh ✅"
