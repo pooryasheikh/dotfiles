@@ -136,4 +136,20 @@ defaults write com.apple.CrashReporter DialogType -string "none"
 
 for app in Finder Dock SystemUIServer; do killall "$app" >/dev/null 2>&1 || true; done
 
-echo "macOS defaults ✅  (log out and back in for all of them to apply)"
+# Restarting Finder/Dock/SystemUIServer picks up the Dock and Finder settings
+# immediately, but NOT the input ones: scroll direction, tap-to-click and the
+# trackpad gestures are read by WindowServer when the session starts, so they
+# only take effect after a log out and back in. Say so explicitly, because
+# "defaults read" will already show the new value while the old behaviour
+# persists, which looks like the write silently failed.
+cat <<'NOTICE'
+macOS defaults ✅
+
+  Applied now:   Dock, Finder, menu bar, screenshots, keyboard repeat
+  Needs logout:  scroll direction (natural scrolling off), tap to click,
+                 trackpad gestures, and the disabled keyboard shortcuts
+
+  These are read by WindowServer at login. `defaults read` will show the new
+  value immediately even though the behaviour has not changed yet -- log out
+  and back in, then re-check.
+NOTICE
