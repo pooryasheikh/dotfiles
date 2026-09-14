@@ -29,6 +29,7 @@ tap "darksworm/tap"              # argonaut
 tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
 tap "fluxcd/tap"                 # flux
 tap "getsentry/tools"            # sentry-cli
+tap "hashicorp/tap"              # packer, vault (needs HOMEBREW_DEVELOPER to tap)
 tap "ksdme/tap"                  # ut
 tap "minio/stable"               # mc
 tap "mongodb/brew"               # mongodb-database-tools
@@ -125,24 +126,14 @@ brew "tfenv"                     # terraform itself is managed by tfenv
 brew "terragrunt"
 brew "terraform-docs"
 brew "infracost"
-# TEMPORARY WORKAROUND for an upstream bug -- revert when it is fixed.
-#
-# HashiCorp documents `brew tap hashicorp/tap` (https://developer.hashicorp.com/
-# vault/install) and that IS the right way. It just cannot be cloned on
-# Homebrew 7 right now: vagrant.rb declares a URL only under
-# `if OS.linux? && Hardware::CPU.intel?`, and the Boundary Desktop / Vagrant
-# casks lack Linux stanzas. Homebrew 7 validates every formula and cask in a
-# tap for every platform at clone time, so it rejects the whole tap -- taking
-# packer and vault, which are perfectly valid, down with it.
-#   upstream: https://github.com/hashicorp/homebrew-tap/issues/405 (open)
-# Neither is in homebrew-core (BUSL relicensing), so brew.sh mirrors just these
-# two formulae into a local tap, fetched from hashicorp/homebrew-tap itself.
-#
-# TO REVERT once #405 is fixed: restore `tap "hashicorp/tap"` above, change the
-# two lines below back to hashicorp/tap/packer and hashicorp/tap/vault, and
-# delete mirror_hashicorp_formulae from .config/yadm/brew.sh.
-brew "local/hashicorp/packer"
-brew "local/hashicorp/vault"
+# hashicorp/tap needs HOMEBREW_DEVELOPER=1 to tap. Its vagrant.rb -- which we
+# do not use -- declares a URL only under `if OS.linux? && Hardware::CPU.intel?`,
+# and Homebrew 7 rejects an entire tap if any formula in it is invalid on any
+# platform. HOMEBREW_DEVELOPER skips that check (Library/Homebrew/tap.rb:754).
+# brew.sh taps it with the flag before brew-file runs, so brew-file's own
+# `brew tap` is a no-op. Upstream: hashicorp/homebrew-tap#405.
+brew "hashicorp/tap/packer"
+brew "hashicorp/tap/vault"
 brew "ansible"
 brew "sshpass"                           # ansible ssh password auth
 brew "cloudflare/cloudflare/cf-terraforming"

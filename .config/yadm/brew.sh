@@ -35,15 +35,34 @@ TRUSTED_TAPS=(
     felixkratz/formulae
     fluxcd/tap
     getsentry/tools
+    hashicorp/tap
     ksdme/tap
     minio/stable
     mongodb/brew
     nikitabobko/tap
     robusta-dev/krr
 )
+# Homebrew rejects an entire tap if ANY formula in it is invalid on ANY
+# platform. Some upstream taps ship formulae we never use that fail that check
+# -- hashicorp/tap's vagrant.rb declares a URL only for Linux/Intel, so the
+# whole tap is unusable on macOS (hashicorp/homebrew-tap#405). HOMEBREW_DEVELOPER
+# skips the check (Library/Homebrew/tap.rb:754). Scoped to this one command so
+# developer mode is not enabled for anything else.
+needs_developer_bypass() {
+    case "$1" in
+        hashicorp/tap) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
 BROKEN_TAPS=()
 for t in "${TRUSTED_TAPS[@]}"; do
-    if ! brew tap "$t" >/dev/null 2>&1; then
+    if needs_developer_bypass "$t"; then
+        tap_rc=0; HOMEBREW_DEVELOPER=1 brew tap "$t" >/dev/null 2>&1 || tap_rc=$?
+    else
+        tap_rc=0; brew tap "$t" >/dev/null 2>&1 || tap_rc=$?
+    fi
+    if [ "$tap_rc" -ne 0 ]; then
         BROKEN_TAPS+=("$t")
         continue
     fi
@@ -83,38 +102,6 @@ if [[ "$CLASS" == "work" ]]; then
     export HOMEBREW_BREWFILE_APPSTORE=0
     echo "class=work: skipping Mac App Store apps (mas)"
 fi
-
-# TEMPORARY WORKAROUND -- see https://github.com/hashicorp/homebrew-tap/issues/405
-#
-# The documented install is `brew tap hashicorp/tap`, but that tap cannot be
-# cloned on Homebrew 7: vagrant.rb declares a URL only for Linux/Intel, and two
-# casks lack Linux stanzas. Homebrew validates the entire tap at clone time and
-# rejects it, which would take packer and vault down with it and make brew-file
-# abort the whole install.
-#
-# Mirror just those two (valid) formulae from the same upstream repo into a
-# local tap. Fetched fresh each bootstrap, so versions track upstream normally.
-# Delete this function and restore the real tap once #405 is fixed.
-mirror_hashicorp_formulae() {
-    local dest upstream f
-    dest="$(brew --repository)/Library/Taps/local/homebrew-hashicorp/Formula"
-    upstream="https://raw.githubusercontent.com/hashicorp/homebrew-tap/master/Formula"
-    mkdir -p "$dest"
-    for f in packer vault; do
-        if curl -fsSL "$upstream/$f.rb" -o "$dest/$f.rb.tmp"; then
-            mv "$dest/$f.rb.tmp" "$dest/$f.rb"
-        else
-            rm -f "$dest/$f.rb.tmp"
-            if [ -f "$dest/$f.rb" ]; then
-                echo "  could not refresh $f.rb, keeping the existing copy" >&2
-            else
-                echo "  could not fetch $f.rb -- $f will not install" >&2
-            fi
-        fi
-    done
-    echo "Local tap local/hashicorp (packer, vault) ✅"
-}
-mirror_hashicorp_formulae
 
 brew-file install
 echo "Brewfile packages ✅"
