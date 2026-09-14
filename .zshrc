@@ -61,7 +61,15 @@ fi
 #=====
 # Fzf
 #=====
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# `fzf --zsh` (fzf 0.48+) emits the key bindings and completions directly, so
+# there is no generated ~/.fzf.zsh to install or keep in sync. That file came
+# from fzf's old install script and is not tracked, so on a fresh machine this
+# line silently did nothing and Ctrl-T / Ctrl-R / Alt-C were dead.
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+elif [ -f ~/.fzf.zsh ]; then
+  source ~/.fzf.zsh
+fi
 
 #=====================
 # zsh-autosuggestions
