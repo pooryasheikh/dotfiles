@@ -2,6 +2,8 @@ local icons = require("icons")
 local colors = require("colors")
 local settings = require("settings")
 
+local CAFFEINATE_PATTERN = "caffeinate -i -d"
+
 local battery = sbar.add("item", "widgets.battery", {
   position = "right",
   icon = {
@@ -30,7 +32,9 @@ local remaining_time = sbar.add("item", {
 })
 
 
-battery:subscribe({"routine", "power_source_change", "system_woke"}, function()
+local caffeinated = false
+
+local function update_battery()
   sbar.exec("pmset -g batt", function(batt_info)
     local icon = "!"
     local label = "?"
@@ -62,6 +66,12 @@ battery:subscribe({"routine", "power_source_change", "system_woke"}, function()
       end
     end
 
+    -- caffeinate active (idle/display sleep prevented) takes over the color
+    -- so it's obvious at a glance regardless of charge level
+    if caffeinated then
+      color = colors.magenta
+    end
+
     local lead = ""
     if found and charge < 10 then
       lead = "0"
@@ -75,9 +85,33 @@ battery:subscribe({"routine", "power_source_change", "system_woke"}, function()
       label = { string = lead .. label },
     })
   end)
+end
+
+battery:subscribe({"routine", "power_source_change", "system_woke"}, update_battery)
+
+-- Pick up a caffeinate process already running (e.g. left over from before a
+-- sketchybar reload) so the indicator matches reality instead of resetting.
+sbar.exec("pgrep -f '" .. CAFFEINATE_PATTERN .. "' >/dev/null 2>&1 && echo 1 || echo 0", function(result)
+  caffeinated = result:gsub("%s+", "") == "1"
+  update_battery()
 end)
 
+local function toggle_caffeinate()
+  if caffeinated then
+    sbar.exec("pkill -f '" .. CAFFEINATE_PATTERN .. "'")
+  else
+    sbar.exec("caffeinate -i -d")
+  end
+  caffeinated = not caffeinated
+  update_battery()
+end
+
 battery:subscribe("mouse.clicked", function(env)
+  if env.BUTTON == "right" then
+    toggle_caffeinate()
+    return
+  end
+
   local drawing = battery:query().popup.drawing
   battery:set( { popup = { drawing = "toggle" } })
 
