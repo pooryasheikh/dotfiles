@@ -14,7 +14,6 @@ return {
   { import = "astrocommunity.search.grug-far-nvim" },
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.helm" },
-  { import = "astrocommunity.pack.nginx" },
   { import = "astrocommunity.pack.bash" },
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.docker" },
