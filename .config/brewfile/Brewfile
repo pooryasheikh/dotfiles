@@ -1,286 +1,328 @@
-# Homebrew manifest for this machine, managed by brew-file (rcmdnk/file).
-#
-#   brew-file install                       # install everything listed here
-#   brew file update                        # re-record what is installed
-#
-#
-# brew-file (rcmdnk/file) manages this file: brew-wrap appends newly installed
-# packages automatically on `brew install`. That means this file is REGENERATED,
-# so the section comments below will not survive indefinitely.
-#
-# Two things to know:
-#
-#  1. brew-wrap runs `brew file update`, which by default records the full
-#     dependency closure -- that is how this file previously reached 337 entries
-#     including the whole Qt suite and openjdk. To keep it to top-level packages
-#     only, without changing the workflow:  brew file set_leaves 1
-#
-#  2. Homebrew 6 refuses to load formulae from untrusted taps, and both
-#     `brew leaves` and `brew bundle dump` OMIT them silently -- sketchybar and
-#     borders included. brew.sh runs `brew trust` for the taps below first, so
-#     keep that step or those entries will quietly disappear on regeneration.
 
-# ===========================================================================
-# Taps
-# ===========================================================================
-tap "chipmk/tap"                 # docker-mac-net-connect
-tap "cloudflare/cloudflare"      # cf-terraforming
-tap "darksworm/tap"              # argonaut
-tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
-tap "fluxcd/tap"                 # flux
-tap "getsentry/tools"            # sentry-cli
-tap "hashicorp/tap"              # packer, vault (needs HOMEBREW_DEVELOPER to tap)
-tap "ksdme/tap"                  # ut
-tap "minio/stable"               # mc
-tap "mongodb/brew"               # mongodb-database-tools
-tap "nikitabobko/tap"            # aerospace
-tap "robusta-dev/krr"            # krr
+# tap repositories and their packages
 
-# ===========================================================================
-# Shell & prompt
-# ===========================================================================
-brew "bash"                      # tmux-powerkit needs Bash 5+; macOS ships 3.2
-brew "zsh"
-brew "zsh-autosuggestions"
-brew "zsh-completions"
-brew "zsh-syntax-highlighting"
-brew "fzf"
-brew "hstr"                      # ctrl-r history search (alias h)
-brew "z"
-brew "zoxide"
+tap 'homebrew/core'
+brew 'abseil'
+brew 'ada-url'
+brew 'age'
+brew 'ansible'
+brew 'aom'
+brew 'argocd'
+brew 'avro-c'
+brew 'aws-c-auth'
+brew 'aws-c-cal'
+brew 'aws-c-common'
+brew 'aws-c-compression'
+brew 'aws-c-event-stream'
+brew 'aws-c-http'
+brew 'aws-c-io'
+brew 'aws-c-mqtt'
+brew 'aws-c-s3'
+brew 'aws-c-sdkutils'
+brew 'aws-checksums'
+brew 'awscli'
+brew 'bash'
+brew 'bat'
+brew 'boost'
+brew 'bpytop'
+brew 'brew-gem'
+brew 'brotli'
+brew 'c-ares'
+brew 'ca-certificates'
+brew 'cairo'
+brew 'certifi'
+brew 'cf-terraforming'
+brew 'cffi'
+brew 'chruby'
+brew 'cilium-cli'
+brew 'cloud-provider-kind'
+brew 'colordiff'
+brew 'coreutils'
+brew 'cryptography'
+brew 'dav1d'
+brew 'dive'
+brew 'docker'
+brew 'eza'
+brew 'fd'
+brew 'ffmpeg'
+brew 'ffuf'
+brew 'file-formula'
+brew 'flux'
+brew 'fmt'
+brew 'fontconfig'
+brew 'freetype'
+brew 'fzf'
+brew 'gawk'
+brew 'gettext'
+brew 'gh'
+brew 'giflib'
+brew 'git'
+brew 'git-crypt'
+brew 'git-delta'
+brew 'git-filter-repo'
+brew 'glab'
+brew 'glew'
+brew 'glib'
+brew 'gmp'
+brew 'gnu-tar'
+brew 'gnupg'
+brew 'gnutls'
+brew 'go'
+brew 'gource'
+brew 'gpgme'
+brew 'gradle'
+brew 'gradle-completion'
+brew 'graphite2'
+brew 'grep'
+brew 'harfbuzz'
+brew 'hdrhistogram_c'
+brew 'hey'
+brew 'highlight'
+brew 'highway'
+brew 'hstr'
+brew 'htop'
+brew 'httpie'
+brew 'hugo'
+brew 'hyperfine'
+brew 'icu4c@78'
+brew 'imagemagick'
+brew 'imath'
+brew 'infracost'
+brew 'ipinfo-cli'
+brew 'iproute2mac'
+brew 'jansson'
+brew 'jemalloc'
+brew 'jnv'
+brew 'jpeg-turbo'
+brew 'jpeg-xl'
+brew 'jq'
+brew 'json-c'
+brew 'k9s'
+brew 'kaskade'
+brew 'kcat'
+brew 'kind'
+brew 'krb5'
+brew 'ktea'
+brew 'kubectx'
+brew 'kubernetes-cli'
+brew 'kustomize'
+brew 'lame'
+brew 'lazygit'
+brew 'libassuan'
+brew 'libavif'
+brew 'libcbor'
+brew 'libde265'
+brew 'libdeflate'
+brew 'libev'
+brew 'libevent'
+brew 'libffi'
+brew 'libfido2'
+brew 'libgcrypt'
+brew 'libgit2'
+brew 'libgpg-error'
+brew 'libheif'
+brew 'libidn2'
+brew 'libksba'
+brew 'libmagic'
+brew 'libnghttp2'
+brew 'libnghttp3'
+brew 'libngtcp2'
+brew 'libpng'
+brew 'libpsl'
+brew 'librdkafka'
+brew 'libserdes'
+brew 'libsodium'
+brew 'libssh'
+brew 'libssh2'
+brew 'libtasn1'
+brew 'libtiff'
+brew 'libtomcrypt'
+brew 'libtommath'
+brew 'libtool'
+brew 'libunistring'
+brew 'libusb'
+brew 'libuv'
+brew 'libvmaf'
+brew 'libvpx'
+brew 'libx11'
+brew 'libxau'
+brew 'libxcb'
+brew 'libxdmcp'
+brew 'libxext'
+brew 'libxrender'
+brew 'libyaml'
+brew 'libzip'
+brew 'little-cms2'
+brew 'llhttp'
+brew 'lpeg'
+brew 'lua'
+brew 'luajit'
+brew 'luv'
+brew 'lz4'
+brew 'lzlib'
+brew 'lzo'
+brew 'm4'
+brew 'mariadb-connector-c'
+brew 'mas'
+brew 'maven'
+brew 'merve'
+brew 'mongosh'
+brew 'mpdecimal'
+brew 'mpfr'
+brew 'mpg123'
+brew 'mtr'
+brew 'mydumper'
+brew 'mysql-client'
+brew 'nbytes'
+brew 'ncurses'
+brew 'neovim'
+brew 'nettle'
+brew 'node'
+brew 'nowplaying-cli'
+brew 'npth'
+brew 'onefetch'
+brew 'oniguruma'
+brew 'openconnect'
+brew 'openexr'
+brew 'openjdk'
+brew 'openjph'
+brew 'openssl@3'
+brew 'openssl@4'
+brew 'opus'
+brew 'osx-cpu-temp'
+brew 'p11-kit'
+brew 'pcre2'
+brew 'percona-xtrabackup'
+brew 'pinentry'
+brew 'pixman'
+brew 'popt'
+brew 'postgresql@16'
+brew 'presenterm'
+brew 'protobuf'
+brew 'pwgen'
+brew 'pycparser'
+brew 'python@3.14'
+brew 'rclone'
+brew 'readline'
+brew 'reattach-to-user-namespace'
+brew 'ripgrep'
+brew 'rpds-py'
+brew 'rsync'
+brew 'ruby-install'
+brew 's2n'
+brew 'sdl2-compat'
+brew 'sdl2_image'
+brew 'sdl3'
+brew 'sevenzip'
+brew 'simdjson'
+brew 'simdutf'
+brew 'skopeo'
+brew 'snappy'
+brew 'sops'
+brew 'sqlite'
+brew 'sshpass'
+brew 'stern'
+brew 'stoken'
+brew 'svt-av1'
+brew 'swaks'
+brew 'switchaudio-osx'
+brew 'terraform-docs'
+brew 'terragrunt'
+brew 'tfenv'
+brew 'tldr'
+brew 'tmux'
+brew 'tree'
+brew 'tree-sitter'
+brew 'trivy'
+brew 'unibilium'
+brew 'utf8proc'
+brew 'uv'
+brew 'uvwasi'
+brew 'watch'
+brew 'webp'
+brew 'wget'
+brew 'wireguard-go'
+brew 'wireguard-tools'
+brew 'x264'
+brew 'x265'
+brew 'xorgproto'
+brew 'xxhash'
+brew 'xz'
+brew 'yadm'
+brew 'yajl'
+brew 'yarn'
+brew 'yazi'
+brew 'yq'
+brew 'z'
+brew 'zlib-ng-compat'
+brew 'zoxide'
+brew 'zsh'
+brew 'zsh-autosuggestions'
+brew 'zsh-completions'
+brew 'zsh-syntax-highlighting'
+brew 'zstd'
 
-# ===========================================================================
-# Core CLI
-# ===========================================================================
-brew "coreutils"                 # gnubin is on PATH ahead of BSD tools
-brew "gawk"
-brew "gnu-tar"
-brew "tree"
-brew "watch"
-brew "rsync"
-brew "wget"
-brew "bat"
-brew "eza"                       # aliases ls / ll
-brew "fd"
-brew "ripgrep"
-brew "yq"
-brew "jq"
-brew "jnv"                       # interactive jq TUI (homebrew-core; ynqa/tap is broken)
-brew "sevenzip"
-brew "colordiff"                 # alias diff
-brew "highlight"
-brew "tldr"
-brew "hyperfine"
-brew "file-formula"
-brew "yazi"                      # file manager
-brew "gnupg"
-brew "pwgen"
-brew "mas"                       # App Store CLI, for the mas entries below
+tap 'homebrew/cask'
+cask 'brave-browser'
+cask 'claude-code'
+cask 'docker-desktop'
+cask 'finicky'
+cask 'font-hack-nerd-font'
+cask 'font-jetbrains-mono-nerd-font'
+cask 'font-sf-mono'
+cask 'font-sf-pro'
+cask 'font-sketchybar-app-font'
+cask 'font-symbols-only-nerd-font'
+cask 'gcloud-cli'
+cask 'happ'
+cask 'keepassxc'
+cask 'maccy'
+cask 'microsoft-teams'
+cask 'postman'
+cask 'pritunl'
+cask 'sf-symbols'
+cask 'slack'
+cask 'telegram'
+cask 'the-unarchiver'
+cask 'yandex-cloud-cli'
 
-# ===========================================================================
-# Editor / terminal / WM
-# ===========================================================================
-brew "neovim"
-brew "tmux"
-brew "reattach-to-user-namespace"        # tmux-yank on macOS
-brew "felixkratz/formulae/sketchybar"    # status bar (~30 tracked config files)
-brew "felixkratz/formulae/borders"       # JankyBorders, aerospace companion
-brew "nowplaying-cli"                    # sketchybar media widget
-brew "switchaudio-osx"                   # sketchybar volume widget
+tap 'chipmk/tap'
+brew 'docker-mac-net-connect'
 
-# ===========================================================================
-# Git
-# ===========================================================================
-brew "git"
-brew "git-delta"                 # wired up as git's pager in .config/git/config
-brew "git-crypt"
-brew "git-filter-repo"
-brew "lazygit"
-brew "gh"
-brew "glab"                      # GitLab CLI -- the one to use, not gh
-brew "onefetch"
-brew "gource"
+tap 'cloudflare/cloudflare'
 
-# ===========================================================================
-# Kubernetes
-# ===========================================================================
-brew "kubernetes-cli"
-brew "kubectx"
-brew "kustomize"
-brew "k9s"
-brew "stern"
-brew "kind"
-brew "cloud-provider-kind"
-brew "cilium-cli"
-brew "argocd"
-brew "fluxcd/tap/flux"           # used by k9s plugins.yaml + scripts/flux-retries
-brew "robusta-dev/krr/krr"       # resource recommendations
-brew "skopeo"
-brew "dive"
-brew "trivy"
+tap 'darksworm/tap'
+cask 'argonaut'
 
-# ===========================================================================
-# Infrastructure as code
-# ===========================================================================
-brew "tfenv"                     # terraform itself is managed by tfenv
-brew "terragrunt"
-brew "terraform-docs"
-brew "infracost"
-# hashicorp/tap needs HOMEBREW_DEVELOPER=1 to tap. Its vagrant.rb -- which we
-# do not use -- declares a URL only under `if OS.linux? && Hardware::CPU.intel?`,
-# and Homebrew 7 rejects an entire tap if any formula in it is invalid on any
-# platform. HOMEBREW_DEVELOPER skips that check (Library/Homebrew/tap.rb:754).
-# brew.sh taps it with the flag before brew-file runs, so brew-file's own
-# `brew tap` is a no-op. Upstream: hashicorp/homebrew-tap#405.
-brew "hashicorp/tap/packer"
-brew "hashicorp/tap/vault"
-brew "ansible"
-brew "sshpass"                           # ansible ssh password auth
-brew "cloudflare/cloudflare/cf-terraforming"
+tap 'felixkratz/formulae'
+brew 'borders'
+brew 'sketchybar'
 
-# ===========================================================================
-# Cloud
-# ===========================================================================
-brew "awscli"
-brew "rclone"
-brew "minio/stable/mc"
-brew "ipinfo-cli"
-brew "getsentry/tools/sentry-cli"
+tap 'fluxcd/tap'
 
-# ===========================================================================
-# Containers & networking
-# ===========================================================================
-brew "docker"
-brew "chipmk/tap/docker-mac-net-connect" # route to container IPs from the host
-brew "openconnect"
-brew "wireguard-go"
-brew "wireguard-tools"
-brew "mtr"
-brew "httpie"
-brew "hey"                       # load generator
-brew "swaks"                     # SMTP testing
-brew "ffuf"                      # web fuzzer
+tap 'getsentry/tools'
+brew 'sentry-cli'
 
-# ===========================================================================
-# Databases & Kafka
-# ===========================================================================
-brew "postgresql@16"
-brew "mysql-client"
-brew "mydumper"
-brew "percona-xtrabackup"
-brew "mongosh"
-brew "mongodb/brew/mongodb-database-tools"
-brew "kcat"                      # Kafka CLI
-brew "kaskade"                   # Kafka TUI
-brew "ktea"                      # Kafka TUI
+tap 'hashicorp/tap'
+brew 'packer'
+brew 'vault'
 
-# ===========================================================================
-# Secrets
-# ===========================================================================
-brew "sops"                      # git diff driver + scripts/k8secret
-brew "age"
-brew "ut"                        # completions lazyloaded in .zshrc
+tap 'ksdme/tap'
+brew 'ut'
 
-# ===========================================================================
-# Languages & runtimes
-# ===========================================================================
-brew "go"
-brew "node"
-brew "yarn"
-brew "uv"                        # python packaging
-brew "ruby-install"
-brew "chruby"
-brew "brew-gem"
-brew "maven"                     # pulls openjdk
-brew "gradle"                    # pulls openjdk
+tap 'minio/stable'
 
-# ===========================================================================
-# Media & docs
-# ===========================================================================
-brew "ffmpeg"
-brew "imagemagick"
-brew "hugo"
-brew "presenterm"                # terminal slides
+tap 'mongodb/brew'
+brew 'mongodb-database-tools'
 
-# ===========================================================================
-# System monitoring
-# ===========================================================================
-brew "htop"
-brew "bpytop"                    # alias btop
+tap 'nikitabobko/tap'
+cask 'aerospace'
 
-# ===========================================================================
-# Dotfiles
-# ===========================================================================
-brew "yadm"
+tap 'rcmdnk/file'
+brew 'brew-file'
 
-# ===========================================================================
-# Casks
-# ===========================================================================
-# cask "alacritty"               # DISABLED in homebrew-cask on 2026-09-01:
-#                               # disable! because: :fails_gatekeeper_check.
-#                               # `brew install --cask alacritty` now hard-errors
-#                               # and aborts the whole brew-file run. Installed
-#                               # from the upstream DMG by bootstrap.d/15-alacritty.sh
-cask "aerospace"
-cask "maccy"
-cask "finicky"
-cask "the-unarchiver"
-cask "keepassxc"
-cask "brave-browser"
-cask "claude-code"
-cask "docker-desktop"
-cask "gcloud-cli"
-cask "yandex-cloud-cli"
-cask "darksworm/tap/argonaut"    # ArgoCD TUI
-cask "pritunl"                   # VPN
-cask "postman"                   # review: last opened 2026-05-21; httpie covers most
-cask "happ"                      # review: last opened 2026-04-27
-cask "sf-symbols"
+tap 'robusta-dev/krr'
+brew 'krr'
 
-# --- chat -------------------------------------------------------------------
-cask "slack"
-cask "telegram"
-cask "microsoft-teams"
-
-# --- fonts ------------------------------------------------------------------
-cask "font-hack-nerd-font"
-cask "font-jetbrains-mono-nerd-font"
-cask "font-symbols-only-nerd-font"
-cask "font-sf-mono"
-cask "font-sf-pro"
-cask "font-sketchybar-app-font"   # app icons in items/spaces.lua; now in homebrew-cask
-
-# ===========================================================================
-# Mac App Store
-# ===========================================================================
-mas "Xcode", id: 497799835
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "WireGuard", id: 1451685025
-mas "GarageBand", id: 682658836
-mas "GoPro Webcam", id: 6477835262
-
-# ===========================================================================
-# Removed -- recorded so they do not get reinstalled by reflex
-# ===========================================================================
-# cask "iterm2"                  # last opened 2025-09-26; replaced by alacritty
-# cask "offset-explorer"         # never launched once; kcat/kaskade/ktea cover Kafka
-# cask "discord"                 # cask present but Discord.app was deleted by hand
-# cask "db-browser-for-sqlite"   # same -- app deleted by hand
-# cask "mattermost"              # same -- Caskroom holds only metadata
-# cask "multipass"               # never launched once
-# cask "flux"                    # renamed upstream to flux-app; both were installed
-# cask "flux-app"               # f.lux: justgetflux.com is unreachable from the
-#                               # work network (curl 35, connection timed out), and
-#                               # macOS Night Shift covers the same ground
-# cask "docker"                  # renamed upstream to docker-desktop; both installed
-# brew "xclip"                   # Linux clipboard tool; macOS uses pbcopy
-# brew "node@14"                 # EOL, and /usr/local/opt paths no longer exist
-# brew "iproute2mac"             # one-off experiment
-# brew "bottom"                  # htop + bpytop already cover this
-# brew "slides"                  # presenterm covers this
-# brew "s3cmd"                   # awscli + rclone + mc cover this
-# brew "postgresql@15"           # @16 is installed too
-# brew "brew-file"               # replaced by native `brew bundle`; see header
-# brew "flux@2.2"                # stale pin shadowing the current flux
+# App Store applications
+mas 'Slack (4.52.155)', id: 803453959
