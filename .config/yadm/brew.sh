@@ -42,7 +42,6 @@ TRUSTED_TAPS=(
     mongodb/brew
     nikitabobko/tap
     robusta-dev/krr
-    ynqa/tap
 )
 for t in "${TRUSTED_TAPS[@]}"; do
     brew tap "$t" >/dev/null 2>&1 || true

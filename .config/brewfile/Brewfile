@@ -36,7 +36,6 @@ tap "minio/stable"               # mc
 tap "mongodb/brew"               # mongodb-database-tools
 tap "nikitabobko/tap"            # aerospace
 tap "robusta-dev/krr"            # krr
-tap "ynqa/tap"                   # jnv
 
 # ===========================================================================
 # Shell & prompt
@@ -67,7 +66,7 @@ brew "fd"
 brew "ripgrep"
 brew "yq"
 brew "jq"
-brew "jnv"                       # interactive jq TUI
+brew "jnv"                       # interactive jq TUI (homebrew-core; ynqa/tap is broken)
 brew "sevenzip"
 brew "colordiff"                 # alias diff
 brew "highlight"

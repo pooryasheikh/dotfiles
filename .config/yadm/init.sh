@@ -9,6 +9,15 @@
 
 set -euo pipefail
 
+# Homebrew 7 refuses to run as root, so a sudo run dies partway through
+# bootstrap after leaving root-owned files behind. Fail immediately instead.
+if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+    printf '\033[0;31mDo not run this with sudo.\033[0m\n' >&2
+    printf 'Homebrew refuses to run as root and anything created here would be\n' >&2
+    printf 'root-owned. Re-run as your normal user, without sudo.\n' >&2
+    exit 1
+fi
+
 REPO_URL="https://github.com/pooryasheikh/dotfiles.git"
 SYSTEM_TYPE="$(uname -s)"
 
