@@ -29,9 +29,7 @@ tap "darksworm/tap"              # argonaut
 tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
 tap "fluxcd/tap"                 # flux
 tap "getsentry/tools"            # sentry-cli
-tap "hashicorp/tap"              # packer, vault
 tap "ksdme/tap"                  # ut
-tap "kvndrsslr/sketchybar-app-font"  # font-sketchybar-app-font
 tap "minio/stable"               # mc
 tap "mongodb/brew"               # mongodb-database-tools
 tap "nikitabobko/tap"            # aerospace
@@ -127,8 +125,11 @@ brew "tfenv"                     # terraform itself is managed by tfenv
 brew "terragrunt"
 brew "terraform-docs"
 brew "infracost"
-brew "hashicorp/tap/packer"
-brew "hashicorp/tap/vault"
+# brew "hashicorp/tap/packer"   # hashicorp/tap cannot be tapped on Homebrew 7:
+# brew "hashicorp/tap/vault"    # its vagrant.rb has no URL and two casks lack
+#                               # Linux stanzas, so the whole tap fails validation
+#                               # and brew-file aborts. Neither is in homebrew-core
+#                               # (BUSL relicensing). Install by hand when needed.
 brew "ansible"
 brew "sshpass"                           # ansible ssh password auth
 brew "cloudflare/cloudflare/cf-terraforming"
@@ -241,7 +242,7 @@ cask "font-jetbrains-mono-nerd-font"
 cask "font-symbols-only-nerd-font"
 cask "font-sf-mono"
 cask "font-sf-pro"
-cask "kvndrsslr/sketchybar-app-font/font-sketchybar-app-font"  # app icons in items/spaces.lua
+cask "font-sketchybar-app-font"   # app icons in items/spaces.lua; now in homebrew-cask
 
 # ===========================================================================
 # Mac App Store
