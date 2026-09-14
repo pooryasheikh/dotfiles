@@ -44,6 +44,35 @@ latest_version() {
     case "$tag" in v[0-9]*.[0-9]*) printf '%s' "${tag#v}" ;; *) return 1 ;; esac
 }
 
+# --- terminfo ---------------------------------------------------------------
+# alacritty.toml sets TERM=alacritty and tmux.conf sets default-terminal
+# "alacritty", but macOS ncurses ships no such entry -- and installing from the
+# DMG skips the terminfo the cask used to provide. Without it every program
+# that reads TERM complains about an unknown terminal type.
+#
+# Runs before the app install and independently of it, so it is fixed even when
+# Alacritty itself is already up to date.
+install_terminfo() {
+    if infocmp alacritty >/dev/null 2>&1 && infocmp alacritty-direct >/dev/null 2>&1; then
+        return 0
+    fi
+    local tmp
+    tmp="$(mktemp -d)" || return 1
+    if curl -fsSL --max-time 60 -o "$tmp/alacritty.info" \
+        https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info; then
+        # tic writes to ~/.terminfo when not run as root, which is what we want.
+        if tic -xe alacritty,alacritty-direct "$tmp/alacritty.info" 2>"$tmp/tic.err"; then
+            echo "  terminfo: installed alacritty, alacritty-direct"
+        else
+            warn "tic failed:"; sed 's/^/    /' "$tmp/tic.err" >&2
+        fi
+    else
+        warn "could not download alacritty.info; TERM=alacritty will not resolve"
+    fi
+    rm -rf "$tmp"
+}
+install_terminfo
+
 have="$(installed_version)" || have=""
 want="$(latest_version)" || want=""
 

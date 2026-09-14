@@ -58,8 +58,57 @@ defaults write com.apple.screencapture type -string "png"
 
 # --- keyboard shortcuts: free up Ctrl+Left/Right for apps (nvim split
 # resize, shell/editor word-jump) instead of Mission Control space-switching -
-defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 79 '<dict><key>enabled</key><false/></dict>'  # Move left a space (^Left)
-defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 81 '<dict><key>enabled</key><false/></dict>'  # Move right a space (^Right)
+# Captured from the personal machine. AeroSpace owns window and workspace
+# management, so the macOS shortcuts that fight it are turned off:
+#   32,33     Mission Control / Application windows
+#   60,61     Select previous / next input source
+#   79,81     Move left / right a space (^Left, ^Right - also frees them for
+#             nvim split resize and shell word-jump)
+#   118-125   Switch to Desktop 1-8
+# The rest were disabled on the reference machine; replicated verbatim rather
+# than guessed at individually.
+for _hk in 15 16 17 18 19 20 21 22 23 24 25 26 32 33 60 61 79 81 \
+           118 119 120 121 122 123 124 125 164 176 179; do
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys \
+        -dict-add "$_hk" '<dict><key>enabled</key><false/></dict>'
+done
+
+# --- trackpad ----------------------------------------------------------------
+# Captured from the personal machine. Written to both the built-in and the
+# Magic Trackpad domains so an external trackpad behaves the same.
+for _tp in com.apple.AppleMultitouchTrackpad \
+           com.apple.driver.AppleBluetoothMultitouch.trackpad; do
+    defaults write "$_tp" Clicking -bool true                 # tap to click
+    defaults write "$_tp" ActuationStrength -int 0            # silent clicking
+    defaults write "$_tp" TrackpadRightClick -bool true
+    defaults write "$_tp" Dragging -bool false
+    defaults write "$_tp" DragLock -bool false
+    defaults write "$_tp" TrackpadThreeFingerDrag -bool false
+    defaults write "$_tp" TrackpadHandResting -bool true
+    defaults write "$_tp" TrackpadPinch -bool true
+    defaults write "$_tp" TrackpadRotate -bool true
+    defaults write "$_tp" TrackpadScroll -bool true
+    defaults write "$_tp" TrackpadHorizScroll -bool true
+    defaults write "$_tp" TrackpadMomentumScroll -bool true
+    defaults write "$_tp" TrackpadTwoFingerDoubleTapGesture -int 1
+    defaults write "$_tp" TrackpadTwoFingerFromRightEdgeSwipeGesture -int 3
+    # Horizontal swipes are disabled: they switch macOS spaces and fight
+    # AeroSpace. Vertical swipes and pinch stay on for Mission Control.
+    defaults write "$_tp" TrackpadThreeFingerHorizSwipeGesture -int 0
+    defaults write "$_tp" TrackpadFourFingerHorizSwipeGesture -int 0
+    defaults write "$_tp" TrackpadThreeFingerVertSwipeGesture -int 2
+    defaults write "$_tp" TrackpadFourFingerVertSwipeGesture -int 2
+    defaults write "$_tp" TrackpadFourFingerPinchGesture -int 2
+    defaults write "$_tp" TrackpadFiveFingerPinchGesture -int 2
+    defaults write "$_tp" TrackpadThreeFingerTapGesture -int 0
+    defaults write "$_tp" TrackpadCornerSecondaryClick -int 0
+done
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false  # natural scrolling OFF
+defaults write NSGlobalDomain com.apple.trackpad.forceClick -bool false
+# Tap-to-click also needs the global mirrors, or it does not take effect until
+# System Settings is opened.
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # --- Secure Input -----------------------------------------------------------
 # Terminal.app's "Secure Keyboard Entry" calls EnableSecureEventInput() and

@@ -34,4 +34,32 @@ clone_verified "$CUSTOM/plugins/zsh-lazyload" \
 clone_verified "$CUSTOM/plugins/zsh-vi-mode" \
     https://github.com/jeffreytse/zsh-vi-mode.git zsh-vi-mode.plugin.zsh
 
+# --- completion directory permissions ----------------------------------------
+# oh-my-zsh refuses to load completions from group- or world-writable
+# directories and prints a warning at every shell start. Homebrew makes
+# /opt/homebrew/share group-writable for the admin group, which trips it:
+#
+#   [oh-my-zsh] Insecure completion-dependent directories detected:
+#   drwxrwxr-x  ... /opt/homebrew/share
+#
+# That console output during startup also breaks powerlevel10k's instant
+# prompt, which is why the p10k warning appears alongside it.
+#
+# Fixing the permissions is preferable to setting ZSH_DISABLE_COMPFIX, which
+# would silence the check rather than address it. Homebrew may restore group
+# write on upgrade; re-run this (or `compaudit | xargs chmod g-w,o-w`) if the
+# warning comes back.
+insecure="$(zsh -fc 'autoload -Uz compaudit; compaudit' 2>/dev/null)" || insecure=""
+if [[ -n "$insecure" ]]; then
+    echo "  tightening permissions on completion directories:"
+    while IFS= read -r dir; do
+        [[ -e "$dir" ]] || continue
+        if chmod g-w,o-w "$dir" 2>/dev/null; then
+            echo "    fixed $dir"
+        else
+            echo "    could not chmod $dir (not owned by you?)" >&2
+        fi
+    done <<< "$insecure"
+fi
+
 echo "Oh My Zsh ✅"
